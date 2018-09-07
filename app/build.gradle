@@ -48,4 +48,9 @@ dependencies {
 
     implementation 'com.prolificinteractive:material-calendarview:1.4.3'
 
+    implementation 'com.google.firebase:firebase-auth:15.0.0'
+    implementation 'com.google.firebase:firebase-firestore:15.0.0'
+    implementation 'com.firebaseui:firebase-ui-auth:4.0.0'
 }
+
+

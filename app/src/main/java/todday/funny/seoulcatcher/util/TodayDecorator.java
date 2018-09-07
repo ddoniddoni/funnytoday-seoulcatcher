@@ -1,28 +1,36 @@
 package todday.funny.seoulcatcher.util;
 
 import android.graphics.Color;
+import android.graphics.Typeface;
 import android.text.style.ForegroundColorSpan;
+import android.text.style.RelativeSizeSpan;
+import android.text.style.StyleSpan;
 
 import com.prolificinteractive.materialcalendarview.CalendarDay;
 import com.prolificinteractive.materialcalendarview.DayViewDecorator;
 import com.prolificinteractive.materialcalendarview.DayViewFacade;
 
 import java.util.Calendar;
-import java.util.Date;
 
-public class CommonDecorator implements DayViewDecorator {
+public class TodayDecorator implements DayViewDecorator {
 
-    private Calendar calendar = Calendar.getInstance();
+    private CalendarDay date = null;
+
+    public  TodayDecorator (){
+        date = CalendarDay.today();
+    }
+
     @Override
     public boolean shouldDecorate(CalendarDay day) {
-        day.copyTo(calendar);
-        int weekDay = calendar.get(Calendar.DAY_OF_WEEK);
+        return date != null && day == date;
 
-        return weekDay != Calendar.DAY_OF_WEEK;
     }
 
     @Override
     public void decorate(DayViewFacade view) {
-        view.addSpan(new ForegroundColorSpan(Color.BLACK));
+        view.addSpan(new StyleSpan(Typeface.BOLD));
+        view.addSpan(new RelativeSizeSpan(1.4f));
+        view.addSpan(new ForegroundColorSpan(Color.GREEN));
     }
 }
+

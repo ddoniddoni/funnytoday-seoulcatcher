@@ -13,16 +13,15 @@ import todday.funny.seoulcatcher.BaseActivity;
 import todday.funny.seoulcatcher.R;
 import todday.funny.seoulcatcher.databinding.EducationBinding;
 import todday.funny.seoulcatcher.viewmodel.EducationViewModel;
-import todday.funny.seoulcatcher.viewmodel.HistoryViewModel;
 
-public class HistoryFragment extends Fragment {
+public class EducationFragment extends Fragment{
 
-    private HistoryBinding binding = null;
-    private HistoryViewModel model = null;
+    private EducationBinding binding = null;
+    private EducationViewModel model = null;
 
-    public static HistoryFragment newInstance() {
+    public static EducationFragment newInstance() {
         Bundle args = new Bundle();
-        HistoryFragment fragment = new HistoryFragment();
+        EducationFragment fragment = new EducationFragment();
         fragment.setArguments(args);
         return fragment;
     }
@@ -30,9 +29,9 @@ public class HistoryFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_history, container, false);
+        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_education, container, false);
         if (getActivity() != null && getActivity() instanceof BaseActivity) {
-            model = ((BaseActivity) getActivity()).getHistoryViewModel();
+            model = ((BaseActivity) getActivity()).getEducationViewModel();
             binding.setModel(model);
         }
         return binding.getRoot();
@@ -40,4 +39,3 @@ public class HistoryFragment extends Fragment {
 
 
 }
-

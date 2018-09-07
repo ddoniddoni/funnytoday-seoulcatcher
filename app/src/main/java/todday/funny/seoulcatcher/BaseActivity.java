@@ -8,8 +8,10 @@ import android.view.inputmethod.InputMethodManager;
 import io.reactivex.disposables.CompositeDisposable;
 import todday.funny.seoulcatcher.util.ToastMake;
 import todday.funny.seoulcatcher.viewmodel.EducationViewModel;
+import todday.funny.seoulcatcher.viewmodel.HistoryViewModel;
 import todday.funny.seoulcatcher.viewmodel.MainViewModel;
 import todday.funny.seoulcatcher.viewmodel.ProfileViewModel;
+import todday.funny.seoulcatcher.viewmodel.ScheduleViewModel;
 import todday.funny.seoulcatcher.viewmodel.SettingViewModel;
 
 public class BaseActivity extends AppCompatActivity {
@@ -21,6 +23,8 @@ public class BaseActivity extends AppCompatActivity {
     private ProfileViewModel profileViewModel;
     private SettingViewModel settingViewModel;
     private EducationViewModel educationViewModel;
+    private ScheduleViewModel scheduleViewModel;
+    private HistoryViewModel historyViewModel;
 
     //backpress
     private static final int TIME_INTERVAL = 2000; // # milliseconds, desired time passed between two back presses.
@@ -75,7 +79,12 @@ public class BaseActivity extends AppCompatActivity {
         }
         return mainViewModel;
     }
-
+    public ScheduleViewModel getScheduleViewModel() {
+        if (scheduleViewModel == null) {
+            scheduleViewModel = new ScheduleViewModel(this);
+        }
+        return scheduleViewModel;
+    }
     public EducationViewModel getEducationViewModel() {
         if (educationViewModel == null) {
             educationViewModel = new EducationViewModel(this);
@@ -89,7 +98,12 @@ public class BaseActivity extends AppCompatActivity {
         }
         return profileViewModel;
     }
-
+    public HistoryViewModel getHistoryViewModel() {
+        if (historyViewModel == null) {
+            historyViewModel = new HistoryViewModel(this);
+        }
+        return historyViewModel;
+    }
     public SettingViewModel getSettingViewModel() {
         if (settingViewModel == null) {
             settingViewModel = new SettingViewModel(this);
