@@ -12,6 +12,7 @@ import android.view.ViewGroup;
 import todday.funny.seoulcatcher.BaseActivity;
 import todday.funny.seoulcatcher.R;
 import todday.funny.seoulcatcher.databinding.EducationBinding;
+import todday.funny.seoulcatcher.databinding.HistoryBinding;
 import todday.funny.seoulcatcher.viewmodel.EducationViewModel;
 import todday.funny.seoulcatcher.viewmodel.HistoryViewModel;
 

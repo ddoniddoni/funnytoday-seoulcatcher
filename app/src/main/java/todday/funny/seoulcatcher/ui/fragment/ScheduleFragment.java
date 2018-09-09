@@ -26,6 +26,7 @@ import java.util.concurrent.Executors;
 
 import todday.funny.seoulcatcher.BaseActivity;
 import todday.funny.seoulcatcher.R;
+import todday.funny.seoulcatcher.databinding.ScheduleBinding;
 import todday.funny.seoulcatcher.util.CommonDecorator;
 import todday.funny.seoulcatcher.util.EventDecorator;
 import todday.funny.seoulcatcher.util.SaturdayDecorator;
@@ -84,18 +85,18 @@ public class ScheduleFragment extends Fragment {
     }
 
     private void settingCalendar() {
-        final ArrayList<String>[] eventDay = new ArrayList[0];
+        final ArrayList<String> eventDay ;
+        eventDay = model.getEventDay();
         calendarView.setOnDateChangedListener(new OnDateSelectedListener() {
             @Override
             public void onDateSelected(@NonNull MaterialCalendarView widget, @NonNull CalendarDay date, boolean selected) {
-                 eventDay[0] = model.getEventDay();
                 String year = String.valueOf(date.getYear());
                 String month = String.valueOf(date.getMonth() + 1);
                 String dayy = String.valueOf(date.getDay());
                 String datee = year + "," + month + "," + dayy;
 
-                for (int i = 0; i < eventDay[0].size(); i++) {
-                    if (eventDay[0].get(i) == datee) {
+                for (int i = 0; i < eventDay.size(); i++) {
+                    if (eventDay.get(i) == datee) {
                         AlertDialog.Builder alertDialog = new AlertDialog.Builder(context)
                                 .setTitle("교육을 신청하시겠습니까?")
                                 .setMessage(datee + " , " + "광나루")
@@ -112,7 +113,7 @@ public class ScheduleFragment extends Fragment {
                 }
             }
         });
-        new CheckPointCalender(eventDay[0]).executeOnExecutor(Executors.newSingleThreadExecutor());
+        new CheckPointCalender(eventDay).executeOnExecutor(Executors.newSingleThreadExecutor());
         calendarView.addDecorators(commonDecorator,sundayDecorator,saturdayDecorator,todayDecorator);
     }
 
@@ -129,7 +130,7 @@ public class ScheduleFragment extends Fragment {
         protected ArrayList<CalendarDay> doInBackground(Void... voids) {
             Calendar calendar = Calendar.getInstance();
 
-            for (int i = 0; i < timeResult.size() + 1; i++) {
+            for (int i = 0; i < timeResult.size() ; i++) {
                 CalendarDay day = CalendarDay.from(calendar);
                 String[] time = timeResult.get(i).split(",");
                 int year = Integer.parseInt(time[0]);
