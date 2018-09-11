@@ -18,6 +18,7 @@ import io.reactivex.SingleEmitter;
 import io.reactivex.SingleOnSubscribe;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
+import todday.funny.seoulcatcher.interactor.OnLoadUserDataFinishListener;
 import todday.funny.seoulcatcher.model.User;
 import todday.funny.seoulcatcher.util.Keys;
 
@@ -76,10 +77,9 @@ public class ServerDataController {
             @Override
             public void subscribe(final SingleEmitter<User> emitter) throws Exception {
                 if (mLoginUser == null) {
-                    getUser(mLoginUserId, new OnSuccessListener<DocumentSnapshot>() {
+                    getUser(mLoginUserId, new OnLoadUserDataFinishListener() {
                         @Override
-                        public void onSuccess(DocumentSnapshot documentSnapshot) {
-                            User user = documentSnapshot.toObject(User.class);
+                        public void onFinish(User user) {
                             mLoginUser = user;
                             emitter.onSuccess(mLoginUser);
                         }
@@ -92,9 +92,19 @@ public class ServerDataController {
                 .observeOn(AndroidSchedulers.mainThread());
     }
 
-    public void getUser(String userId, @NonNull OnSuccessListener<DocumentSnapshot> onSuccessListener) {
+    public void getUser(String userId, @NonNull final OnLoadUserDataFinishListener onLoadUserDataFinishListener) {
         Log.d(TAG + "getUser", "userId = " + userId);
-        db.collection(Keys.USERS).document(userId).get().addOnSuccessListener(onSuccessListener);
+        if (userId.equals(mLoginUserId) && mLoginUser != null) {
+            onLoadUserDataFinishListener.onFinish(mLoginUser);
+        } else {
+            db.collection(Keys.USERS).document(userId).get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+                @Override
+                public void onSuccess(DocumentSnapshot documentSnapshot) {
+                    User user = documentSnapshot.toObject(User.class);
+                    onLoadUserDataFinishListener.onFinish(user);
+                }
+            });
+        }
     }
 
 }

@@ -10,6 +10,7 @@ import android.view.ViewGroup;
 import todday.funny.seoulcatcher.BaseActivity;
 import todday.funny.seoulcatcher.R;
 import todday.funny.seoulcatcher.databinding.ProfileBinding;
+import todday.funny.seoulcatcher.util.Keys;
 import todday.funny.seoulcatcher.viewmodel.ProfileViewModel;
 
 
@@ -17,8 +18,9 @@ public class ProfileFragment extends Fragment {
     private ProfileBinding binding;
     private ProfileViewModel model;
 
-    public static ProfileFragment newInstance() {
+    public static ProfileFragment newInstance(String userId) {
         Bundle args = new Bundle();
+        args.putString(Keys.USER_ID, userId);
         ProfileFragment fragment = new ProfileFragment();
         fragment.setArguments(args);
         return fragment;
@@ -28,7 +30,10 @@ public class ProfileFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_profile, container, false);
-        model = new ProfileViewModel(getActivity());
+        if (getArguments() != null) {
+            String userId = getArguments().getString(Keys.USER_ID);
+            model = new ProfileViewModel(getActivity(), userId);
+        }
         binding.setModel(model);
         return binding.getRoot();
     }
