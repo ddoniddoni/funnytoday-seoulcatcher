@@ -26,6 +26,8 @@
     <string name="level_text">"Level %s"</string>
     <string name="edit_image">"Edit Image"</string>
 
+    <string name="percent_type">"%"</string>
+
     <string name="days_ago">" days ago"</string>
     <string name="days_remaining">" days remaining"</string>
 

@@ -3,7 +3,7 @@ package todday.funny.seoulcatcher.model;
 import android.os.Parcel;
 import android.os.Parcelable;
 
-public class Coupon implements Parcelable {
+public class MemberShip implements Parcelable {
     private String name;
     private String logoUrl;
     private String color;
@@ -54,24 +54,24 @@ public class Coupon implements Parcelable {
         dest.writeInt(this.discountRate);
     }
 
-    public Coupon() {
+    public MemberShip() {
     }
 
-    protected Coupon(Parcel in) {
+    protected MemberShip(Parcel in) {
         this.name = in.readString();
         this.logoUrl = in.readString();
         this.discountRate = in.readInt();
     }
 
-    public static final Parcelable.Creator<Coupon> CREATOR = new Parcelable.Creator<Coupon>() {
+    public static final Parcelable.Creator<MemberShip> CREATOR = new Parcelable.Creator<MemberShip>() {
         @Override
-        public Coupon createFromParcel(Parcel source) {
-            return new Coupon(source);
+        public MemberShip createFromParcel(Parcel source) {
+            return new MemberShip(source);
         }
 
         @Override
-        public Coupon[] newArray(int size) {
-            return new Coupon[size];
+        public MemberShip[] newArray(int size) {
+            return new MemberShip[size];
         }
     };
 }

@@ -4,13 +4,13 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
-    <data class="MembershipBinding">
+    <data class="MembershipListBinding">
 
         <import type="android.view.View" />
 
         <variable
             name="model"
-            type="todday.funny.seoulcatcher.viewmodel.MembershipViewModel" />
+            type="todday.funny.seoulcatcher.viewmodel.MembershipListViewModel" />
     </data>
 
     <LinearLayout
@@ -53,6 +53,7 @@
         </LinearLayout>
 
         <android.support.v7.widget.RecyclerView
+            setMemberShipAdapter="@{model.mMemberShipList}"
             android:layout_width="match_parent"
             android:layout_height="match_parent" />
     </LinearLayout>

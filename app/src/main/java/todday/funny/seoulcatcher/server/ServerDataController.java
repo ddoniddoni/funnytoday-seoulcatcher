@@ -34,9 +34,11 @@ import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.functions.Consumer;
 import io.reactivex.schedulers.Schedulers;
 import todday.funny.seoulcatcher.R;
+import todday.funny.seoulcatcher.interactor.OnLoadMemberShipsListener;
 import todday.funny.seoulcatcher.interactor.OnLoadScheduleListListener;
 import todday.funny.seoulcatcher.interactor.OnLoadUserDataFinishListener;
 import todday.funny.seoulcatcher.interactor.OnUploadFinishListener;
+import todday.funny.seoulcatcher.model.MemberShip;
 import todday.funny.seoulcatcher.model.Schedule;
 import todday.funny.seoulcatcher.model.User;
 import todday.funny.seoulcatcher.util.ImageConverter;
@@ -219,6 +221,27 @@ public class ServerDataController {
                     }
                 }
                 onLoadScheduleListListener.onComplete(scheduleArrayList);
+            }
+        });
+    }
+
+    /**
+     * 멤버쉽 가져오기
+     */
+
+    public void getMemberShips(String level, final OnLoadMemberShipsListener onLoadMemberShipsListener) {
+        db.collection(Keys.MEMBER_SHIPS).document(level).collection(Keys.ITEMS).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                ArrayList<MemberShip> memberShips = new ArrayList<>();
+                if (task.isSuccessful()) {
+                    for (int i = 0; i < task.getResult().getDocuments().size(); i++) {
+                        DocumentSnapshot documentSnapshot = task.getResult().getDocuments().get(i);
+                        MemberShip memberShip = documentSnapshot.toObject(MemberShip.class);
+                        memberShips.add(memberShip);
+                    }
+                }
+                onLoadMemberShipsListener.onComplete(memberShips);
             }
         });
     }

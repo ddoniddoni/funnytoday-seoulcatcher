@@ -11,11 +11,12 @@ import android.view.ViewGroup;
 
 import todday.funny.seoulcatcher.R;
 import todday.funny.seoulcatcher.databinding.MembershipBinding;
+import todday.funny.seoulcatcher.databinding.MembershipListBinding;
 import todday.funny.seoulcatcher.util.Keys;
-import todday.funny.seoulcatcher.viewmodel.MembershipViewModel;
+import todday.funny.seoulcatcher.viewmodel.MembershipListViewModel;
 
 public class MembershipDialog extends DialogFragment {
-    private MembershipBinding binding;
+    private MembershipListBinding binding;
 
     public static MembershipDialog newInstance(String level) {
         Bundle args = new Bundle();
@@ -30,8 +31,8 @@ public class MembershipDialog extends DialogFragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         binding = DataBindingUtil.inflate(inflater, R.layout.dialog_membership, container, false);
         if (getArguments() != null) {
-            String path = getArguments().getString(Keys.PATH);
-             MembershipViewModel model = new MembershipViewModel(getActivity());
+            String level = getArguments().getString(Keys.LEVEL);
+             MembershipListViewModel model = new MembershipListViewModel(getActivity(),level);
             binding.setModel(model);
         }
         return binding.getRoot();
