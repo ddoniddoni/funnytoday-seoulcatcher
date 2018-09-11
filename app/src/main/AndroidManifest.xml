@@ -12,15 +12,21 @@
         android:theme="@style/AppTheme">
         <activity
             android:name=".ui.activity.IntroActivity"
-            android:label="@string/app_name">
+            android:label="@string/app_name"
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".ui.activity.MainActivity"
-            android:launchMode="singleTask"/>
+        <activity
+            android:name=".ui.activity.MainActivity"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.activity.ImageViewerActivity"
+            android:screenOrientation="portrait" />
     </application>
 
 </manifest>

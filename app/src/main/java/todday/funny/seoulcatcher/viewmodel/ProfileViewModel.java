@@ -1,6 +1,7 @@
 package todday.funny.seoulcatcher.viewmodel;
 
 import android.content.Context;
+import android.databinding.ObservableBoolean;
 import android.databinding.ObservableField;
 import android.support.v4.widget.SwipeRefreshLayout;
 
@@ -10,11 +11,13 @@ import todday.funny.seoulcatcher.model.User;
 public class ProfileViewModel extends BaseViewModel implements SwipeRefreshLayout.OnRefreshListener {
     public ObservableField<String> mUserId = new ObservableField<>();
     public ObservableField<User> mUser = new ObservableField<>();
+    public ObservableBoolean isMy = new ObservableBoolean(false);
 
 
     public ProfileViewModel(Context context, String userId) {
         super(context);
         mUserId.set(userId);
+        isMy.set(userId.equals(mServerDataController.mLoginUserId));
         getUser(userId);
     }
 

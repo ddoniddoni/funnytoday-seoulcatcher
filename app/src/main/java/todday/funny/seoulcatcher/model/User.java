@@ -15,6 +15,7 @@ public class User implements Parcelable {
     private String email;
     private String phoneNumber;
     private String photoUrl;
+    private String backgroundUrl;
     private String level;
 
     public void setUser(FirebaseUser firebaseUser) {
@@ -28,10 +29,12 @@ public class User implements Parcelable {
         } else {
             setPhotoUrl(Keys.DEFAULT_USER_PROFILE_URL);
         }
+        setBackgroundUrl(Keys.DEFAULT_USER_BACKGROUND_URL);
         if (email != null && email.length() > 0) {
             String[] split = email.split("@");
             for (String s : split) {
                 setNickName(s);
+                setName(s);
                 break;
             }
         }
@@ -86,6 +89,14 @@ public class User implements Parcelable {
         this.photoUrl = photoUrl;
     }
 
+    public String getBackgroundUrl() {
+        return backgroundUrl;
+    }
+
+    public void setBackgroundUrl(String backgroundUrl) {
+        this.backgroundUrl = backgroundUrl;
+    }
+
     public String getLevel() {
         return level;
     }
@@ -110,6 +121,7 @@ public class User implements Parcelable {
         dest.writeString(this.email);
         dest.writeString(this.phoneNumber);
         dest.writeString(this.photoUrl);
+        dest.writeString(this.backgroundUrl);
         dest.writeString(this.level);
     }
 
@@ -120,6 +132,7 @@ public class User implements Parcelable {
         this.email = in.readString();
         this.phoneNumber = in.readString();
         this.photoUrl = in.readString();
+        this.backgroundUrl = in.readString();
         this.level = in.readString();
     }
 
