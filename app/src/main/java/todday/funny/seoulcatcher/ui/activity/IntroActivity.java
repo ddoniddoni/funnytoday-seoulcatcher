@@ -45,10 +45,9 @@ public class IntroActivity extends BaseActivity {
     private ServerDataController mServerDataController;
 
     List<AuthUI.IdpConfig> providers = Arrays.asList(
-            new AuthUI.IdpConfig.GoogleBuilder().build(),
             new AuthUI.IdpConfig.EmailBuilder().build(),
-            new AuthUI.IdpConfig.PhoneBuilder().build()
-    );
+            new AuthUI.IdpConfig.PhoneBuilder().build(),
+            new AuthUI.IdpConfig.GoogleBuilder().build());
 
 
     @Override

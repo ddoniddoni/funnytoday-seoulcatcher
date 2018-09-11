@@ -8,30 +8,41 @@ import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.firestore.DocumentChange;
+import com.google.firebase.firestore.EventListener;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.FirebaseFirestoreException;
+import com.google.firebase.firestore.QuerySnapshot;
 import com.prolificinteractive.materialcalendarview.CalendarDay;
 import com.prolificinteractive.materialcalendarview.MaterialCalendarView;
 import com.prolificinteractive.materialcalendarview.OnDateSelectedListener;
 
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.HashMap;
-import java.util.concurrent.Executor;
+import java.util.List;
 import java.util.concurrent.Executors;
 
 import todday.funny.seoulcatcher.BaseActivity;
 import todday.funny.seoulcatcher.R;
+import todday.funny.seoulcatcher.adapter.ScheduleAdapter;
 import todday.funny.seoulcatcher.databinding.ScheduleBinding;
+import todday.funny.seoulcatcher.model.ScheduleModel;
 import todday.funny.seoulcatcher.util.CommonDecorator;
 import todday.funny.seoulcatcher.util.EventDecorator;
 import todday.funny.seoulcatcher.util.SaturdayDecorator;
 import todday.funny.seoulcatcher.util.SundayDecorator;
-import todday.funny.seoulcatcher.util.ToastMake;
 import todday.funny.seoulcatcher.util.TodayDecorator;
 import todday.funny.seoulcatcher.viewmodel.ScheduleViewModel;
 
@@ -47,6 +58,13 @@ public class ScheduleFragment extends Fragment {
     private TodayDecorator todayDecorator = new TodayDecorator();
     private TodayDecorator setModel = new TodayDecorator();
 
+    private RecyclerView recyclerView;
+    private ScheduleAdapter adapter;
+
+    private ArrayList<ScheduleModel> scheduleModels = new ArrayList<>();
+    private ArrayList<String> scheduleModelsKey = new ArrayList<>();
+
+    private TextView textView;
 
     public static ScheduleFragment newInstance() {
         Bundle args = new Bundle();
@@ -66,26 +84,95 @@ public class ScheduleFragment extends Fragment {
 
         View view = binding.getRoot();
         context = container.getContext();
-        calendarView = view.findViewById(R.id.calendarView);
 
+        calendarView = view.findViewById(R.id.calendarView);
+        recyclerView = view.findViewById(R.id.scheduleFragment_recyclerView);
+        textView = view.findViewById(R.id.scheduleFragment_textView);
+
+        adapter = new ScheduleAdapter(getContext(), scheduleModels ,scheduleModelsKey);
+        recyclerView.setAdapter(adapter);
+        recyclerView.setLayoutManager(new LinearLayoutManager(inflater.getContext()));
+
+        getScheduleDataBase();
         settingCalendar();
         return view;
     }
 
-    private void createScheduleDateBase() {
-        /*HashMap map = new HashMap<String,Object >();
-        map["schecule"] = date
+    private void getScheduleDataBase() {
+        /*FirebaseFirestore.getInstance().collection("users").document(model.userUid).collection("schedule").get().addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
+            @Override
+            public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
+                scheduleModels.clear();
+                if (queryDocumentSnapshots == null) {
+                    Log.e("recyclerView", "없다!");
+                } else {
+                    textView.setVisibility(View.INVISIBLE);
+                    for(int i=0;i<queryDocumentSnapshots.getDocuments().size();i++) {
+                        ScheduleModel scheduleModel = (queryDocumentSnapshots.getDocuments().get(i)).toObject(ScheduleModel.class);
+                        Log.e("data",scheduleModel.getDate());
+                        //Log.e("aaaa", String.valueOf((queryDocumentSnapshots.getDocuments().get(i).getData())));
+                        scheduleModels.add(scheduleModel);
+                    }
+                    adapter.notifyDataSetChanged();
+                }
+            }
+        });*/
+        FirebaseFirestore.getInstance().collection("users").document(model.userUid).collection("schedule").addSnapshotListener(new EventListener<QuerySnapshot>() {
+            @Override
+            public void onEvent(@Nullable QuerySnapshot queryDocumentSnapshots, @Nullable FirebaseFirestoreException e) {
+                if(queryDocumentSnapshots.getDocuments() == null){
+                    Log.e("recyclerView","없다!");
+                }else {
+                    textView.setVisibility(View.INVISIBLE);
+                    List<DocumentChange> query =queryDocumentSnapshots.getDocumentChanges();
+                    for (int i = 0; i < query.size(); i++) {
+                        ScheduleModel scheduleModel = (query.get(i).getDocument()).toObject(ScheduleModel.class);
+                        switch (query.get(i).getType()){
+                            case ADDED:
+                                scheduleModels.add(scheduleModel);
+                                scheduleModelsKey.add(query.get(i).getDocument().getId());
+                                Log.e("key",query.get(i).getDocument().getId());
+                                break;
+                            case REMOVED:
+                                Log.e("aaaaa","aaaaaaaaa");
+                                deleteItem(query.get(i).getDocument().getId());
+                                adapter.notifyItemRemoved(i);
+                                break;
+                        }
+                    }
+                    adapter.notifyDataSetChanged();
+                }
+            }
+        });
+    }
 
-        FirebaseFirestore.getInstance().collection("users").document(userId).set(map).addOnSuccessListener {
-            ToastMake.make(context!!,"데이터베이스 삽입 성공")
-            Log.e("데이터", map.get("schecule").toString())
-        }.addOnFailureListener {
-            ToastMake.make(context!!,"데이터베이스 삽입 실패")
-        }*/
+    private void deleteItem(String deleteKey){
+        for(int i=0;i<scheduleModelsKey.size();i++){
+            if(deleteKey.equals(scheduleModelsKey.get(i))){
+                scheduleModelsKey.remove(i);
+            }
+        }
+    }
+
+    private void inputScheduleDateBase(final String date) {
+
+        FirebaseFirestore.getInstance().collection("users").document(model.userUid).collection("schedule").document().set(new ScheduleModel(date))
+                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void aVoid) {
+                        Log.e("데이터 베이스 삽입 성공!", date);
+                    }
+                }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                Log.e("데이터 베이스 삽입 실패", e.toString());
+            }
+        });
+
     }
 
     private void settingCalendar() {
-        final ArrayList<String> eventDay ;
+        final ArrayList<String> eventDay;
         eventDay = model.getEventDay();
         calendarView.setOnDateChangedListener(new OnDateSelectedListener() {
             @Override
@@ -93,17 +180,16 @@ public class ScheduleFragment extends Fragment {
                 String year = String.valueOf(date.getYear());
                 String month = String.valueOf(date.getMonth() + 1);
                 String dayy = String.valueOf(date.getDay());
-                String datee = year + "," + month + "," + dayy;
-
+                final String datee = year + "," + month + "," + dayy;
                 for (int i = 0; i < eventDay.size(); i++) {
-                    if (eventDay.get(i) == datee) {
+                    if (eventDay.get(i).equals(datee)) {
                         AlertDialog.Builder alertDialog = new AlertDialog.Builder(context)
                                 .setTitle("교육을 신청하시겠습니까?")
-                                .setMessage(datee + " , " + "광나루")
+                                .setMessage(datee + "  " + "광나루")
                                 .setPositiveButton("신청", new DialogInterface.OnClickListener() {
                                     @Override
                                     public void onClick(DialogInterface dialogInterface, int i) {
-                                        createScheduleDateBase();
+                                        inputScheduleDateBase(datee);
                                     }
                                 })
                                 .setNegativeButton("취소", null);
@@ -114,7 +200,7 @@ public class ScheduleFragment extends Fragment {
             }
         });
         new CheckPointCalender(eventDay).executeOnExecutor(Executors.newSingleThreadExecutor());
-        calendarView.addDecorators(commonDecorator,sundayDecorator,saturdayDecorator,todayDecorator);
+        calendarView.addDecorators(commonDecorator, sundayDecorator, saturdayDecorator, todayDecorator);
     }
 
     private class CheckPointCalender extends AsyncTask<Void, Void, ArrayList<CalendarDay>> {
@@ -130,7 +216,7 @@ public class ScheduleFragment extends Fragment {
         protected ArrayList<CalendarDay> doInBackground(Void... voids) {
             Calendar calendar = Calendar.getInstance();
 
-            for (int i = 0; i < timeResult.size() ; i++) {
+            for (int i = 0; i < timeResult.size(); i++) {
                 CalendarDay day = CalendarDay.from(calendar);
                 String[] time = timeResult.get(i).split(",");
                 int year = Integer.parseInt(time[0]);

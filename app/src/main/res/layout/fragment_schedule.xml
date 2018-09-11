@@ -18,29 +18,32 @@
         android:orientation="vertical">
 
         <com.prolificinteractive.materialcalendarview.MaterialCalendarView xmlns:app="http://schemas.android.com/apk/res-auto"
-            android:layout_weight="1"
+            android:layout_weight="8"
             android:id="@+id/calendarView"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="0dp"
             app:mcv_selectionColor="#a9dd03ff"
             app:mcv_showOtherDates="defaults" />
 
-        <LinearLayout
-            android:layout_weight="8"
+        <RelativeLayout
+            android:layout_weight="5"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="@android:color/holo_blue_bright">
+            android:layout_height="0dp"
+            >
 
             <TextView
-                android:id="@+id/textView"
-                android:layout_width="0dp"
-                android:layout_height="0dp"
-                android:text="@string/education"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-
-        </LinearLayout>
+                android:id="@+id/scheduleFragment_textView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:text="스케쥴이 없습니다"
+                android:textSize="16sp"
+                />
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/scheduleFragment_recyclerView"
+                android:layout_height="match_parent"
+                android:layout_width="match_parent"
+                />
+        </RelativeLayout>
     </LinearLayout>
 </layout>
