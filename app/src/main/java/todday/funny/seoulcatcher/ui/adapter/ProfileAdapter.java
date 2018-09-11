@@ -10,13 +10,16 @@ import android.view.ViewGroup;
 import java.util.List;
 
 import todday.funny.seoulcatcher.R;
+import todday.funny.seoulcatcher.databinding.ProfileScheduleBinding;
 import todday.funny.seoulcatcher.databinding.UserBinding;
+import todday.funny.seoulcatcher.model.Schedule;
 import todday.funny.seoulcatcher.model.User;
+import todday.funny.seoulcatcher.viewmodel.ScheduleViewModel;
 import todday.funny.seoulcatcher.viewmodel.UserViewModel;
 
 public class ProfileAdapter extends RecyclerView.Adapter {
     private int USER_TYPE = 0;
-    private int WRITE_TYPE = 1;
+    private int SCHEDULE_TYPE = 1;
 
     private Context mContext;
     private List<Object> mItemList;
@@ -32,7 +35,7 @@ public class ProfileAdapter extends RecyclerView.Adapter {
         if (item instanceof User) {
             return USER_TYPE;
         } else {
-            return WRITE_TYPE;
+            return SCHEDULE_TYPE;
         }
     }
 
@@ -56,11 +59,9 @@ public class ProfileAdapter extends RecyclerView.Adapter {
             UserBinding binding = DataBindingUtil.inflate(LayoutInflater.from(viewGroup.getContext()), R.layout.item_user_profile, viewGroup, false);
             return new UserHeaderViewHolder(binding);
         } else {
-            /*HomeItemBinding binding = DataBindingUtil.inflate(LayoutInflater.from(viewGroup.getContext()), R.layout.item_home, viewGroup, false);
-            return new HomeItemViewHolder(binding);*/
+            ProfileScheduleBinding binding = DataBindingUtil.inflate(LayoutInflater.from(viewGroup.getContext()), R.layout.item_profile_schedule, viewGroup, false);
+            return new ProfileScheduleViewHolder(binding);
         }
-        UserBinding binding = DataBindingUtil.inflate(LayoutInflater.from(viewGroup.getContext()), R.layout.item_user_profile, viewGroup, false);
-        return new UserHeaderViewHolder(binding);
     }
 
     @Override
@@ -71,12 +72,11 @@ public class ProfileAdapter extends RecyclerView.Adapter {
             User user = (User) mItemList.get(position);
             UserViewModel model = new UserViewModel(mContext, user);
             holder.setViewModel(model);
-        } else if (viewType == WRITE_TYPE) {
-       /*     HomeItemViewHolder holder = (HomeItemViewHolder) viewHolder;
-            Write write = (Write) mItemList.get(position);
-            WriteViewModel model = new WriteViewModel(mContext, position);
-            model.setWrite(write);
-            holder.setViewModel(model);*/
+        } else if (viewType == SCHEDULE_TYPE) {
+            ProfileScheduleViewHolder holder = (ProfileScheduleViewHolder) viewHolder;
+            Schedule schedule = (Schedule) mItemList.get(position);
+            ScheduleViewModel model = new ScheduleViewModel(mContext, schedule);
+            holder.setViewModel(model);
         }
     }
 
@@ -102,16 +102,17 @@ public class ProfileAdapter extends RecyclerView.Adapter {
         }
     }
 
-  /*  private class HomeItemViewHolder extends RecyclerView.ViewHolder {
-        private HomeItemBinding binding;
+    private class ProfileScheduleViewHolder extends RecyclerView.ViewHolder {
+        private ProfileScheduleBinding binding;
 
-        public HomeItemViewHolder(@NonNull HomeItemBinding binding) {
+        public ProfileScheduleViewHolder(@NonNull ProfileScheduleBinding binding) {
             super(binding.getRoot());
             this.binding = binding;
         }
 
-        public void setViewModel(WriteViewModel viewModel) {
+        public void setViewModel(ScheduleViewModel viewModel) {
             binding.setModel(viewModel);
             binding.executePendingBindings();
-        }*/
+        }
     }
+}

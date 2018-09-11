@@ -21,19 +21,19 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import java.util.ArrayList;
 
 import todday.funny.seoulcatcher.R;
-import todday.funny.seoulcatcher.model.ScheduleModel;
+import todday.funny.seoulcatcher.model.Schedule;
 
 public class ScheduleAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
 
-    private ArrayList<ScheduleModel> scheduleModels ;
+    private ArrayList<Schedule> schedules;
     private ArrayList<String> scheduleModelsKey ;
     private String uid ;
     private Context context;
 
-    public ScheduleAdapter(Context context, ArrayList<ScheduleModel> scheduleModels,ArrayList<String> scheduleModelsKey){
+    public ScheduleAdapter(Context context, ArrayList<Schedule> schedules, ArrayList<String> scheduleModelsKey){
         this.context = context;
         this.uid =  FirebaseAuth.getInstance().getUid();
-        this.scheduleModels = scheduleModels;
+        this.schedules = schedules;
         this.scheduleModelsKey = scheduleModelsKey;
     }
 
@@ -48,13 +48,13 @@ public class ScheduleAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder viewHolder, final int position) {
         ScheduleViewHolder scheduleViewHolder = (ScheduleViewHolder)viewHolder;
 
-        scheduleViewHolder.textView.setText(scheduleModels.get(position).getDate());
+        scheduleViewHolder.textView.setText(schedules.get(position).getDate());
         scheduleViewHolder.button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 AlertDialog.Builder alertDialog = new AlertDialog.Builder(context)
                         .setTitle("교육을 취소 하시겠습니까?")
-                        .setMessage(scheduleModels.get(position).getDate()+ "  광나루")
+                        .setMessage(schedules.get(position).getDate()+ "  광나루")
                         .setPositiveButton("확인", new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialogInterface, int i) {
@@ -83,7 +83,7 @@ public class ScheduleAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
 
     @Override
     public int getItemCount() {
-        return scheduleModels.size();
+        return schedules.size();
     }
 
     private class ScheduleViewHolder extends RecyclerView.ViewHolder{

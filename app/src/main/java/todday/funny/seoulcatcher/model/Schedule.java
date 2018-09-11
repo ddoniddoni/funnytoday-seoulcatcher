@@ -1,11 +1,11 @@
 package todday.funny.seoulcatcher.model;
 
-public class ScheduleModel {
+public class Schedule {
     private String date;
 
-    public ScheduleModel(){}
+    public Schedule(){}
 
-    public ScheduleModel(String date) {
+    public Schedule(String date) {
         this.date = date;
     }
 

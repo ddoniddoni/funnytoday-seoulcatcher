@@ -36,9 +36,9 @@ import java.util.concurrent.Executors;
 
 import todday.funny.seoulcatcher.BaseActivity;
 import todday.funny.seoulcatcher.R;
+import todday.funny.seoulcatcher.model.Schedule;
 import todday.funny.seoulcatcher.ui.adapter.ScheduleAdapter;
 import todday.funny.seoulcatcher.databinding.ScheduleBinding;
-import todday.funny.seoulcatcher.model.ScheduleModel;
 import todday.funny.seoulcatcher.util.CommonDecorator;
 import todday.funny.seoulcatcher.util.EventDecorator;
 import todday.funny.seoulcatcher.util.SaturdayDecorator;
@@ -61,7 +61,7 @@ public class ScheduleFragment extends Fragment {
     private RecyclerView recyclerView;
     private ScheduleAdapter adapter;
 
-    private ArrayList<ScheduleModel> scheduleModels = new ArrayList<>();
+    private ArrayList<Schedule> schedules = new ArrayList<>();
     private ArrayList<String> scheduleModelsKey = new ArrayList<>();
 
     private TextView textView;
@@ -89,7 +89,7 @@ public class ScheduleFragment extends Fragment {
         recyclerView = view.findViewById(R.id.scheduleFragment_recyclerView);
         textView = view.findViewById(R.id.scheduleFragment_textView);
 
-        adapter = new ScheduleAdapter(getContext(), scheduleModels ,scheduleModelsKey);
+        adapter = new ScheduleAdapter(getContext(), schedules,scheduleModelsKey);
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(inflater.getContext()));
 
@@ -102,16 +102,16 @@ public class ScheduleFragment extends Fragment {
         /*FirebaseFirestore.getInstance().collection("users").document(model.userUid).collection("schedule").get().addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
             @Override
             public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
-                scheduleModels.clear();
+                schedules.clear();
                 if (queryDocumentSnapshots == null) {
                     Log.e("recyclerView", "없다!");
                 } else {
                     textView.setVisibility(View.INVISIBLE);
                     for(int i=0;i<queryDocumentSnapshots.getDocuments().size();i++) {
-                        ScheduleModel scheduleModel = (queryDocumentSnapshots.getDocuments().get(i)).toObject(ScheduleModel.class);
+                        Schedule scheduleModel = (queryDocumentSnapshots.getDocuments().get(i)).toObject(Schedule.class);
                         Log.e("data",scheduleModel.getDate());
                         //Log.e("aaaa", String.valueOf((queryDocumentSnapshots.getDocuments().get(i).getData())));
-                        scheduleModels.add(scheduleModel);
+                        schedules.add(scheduleModel);
                     }
                     adapter.notifyDataSetChanged();
                 }
@@ -126,10 +126,10 @@ public class ScheduleFragment extends Fragment {
                     textView.setVisibility(View.INVISIBLE);
                     List<DocumentChange> query =queryDocumentSnapshots.getDocumentChanges();
                     for (int i = 0; i < query.size(); i++) {
-                        ScheduleModel scheduleModel = (query.get(i).getDocument()).toObject(ScheduleModel.class);
+                        Schedule schedule = (query.get(i).getDocument()).toObject(Schedule.class);
                         switch (query.get(i).getType()){
                             case ADDED:
-                                scheduleModels.add(scheduleModel);
+                                schedules.add(schedule);
                                 scheduleModelsKey.add(query.get(i).getDocument().getId());
                                 Log.e("key",query.get(i).getDocument().getId());
                                 break;
@@ -155,7 +155,7 @@ public class ScheduleFragment extends Fragment {
     }
 
     private void inputScheduleDateBase(final String date) {
-        FirebaseFirestore.getInstance().collection("users").document(model.userUid).collection("schedule").document().set(new ScheduleModel(date))
+        FirebaseFirestore.getInstance().collection("users").document(model.userUid).collection("schedule").document().set(new Schedule(date))
                 .addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
                     public void onSuccess(Void aVoid) {
