@@ -11,15 +11,17 @@ import todday.funny.seoulcatcher.util.Keys;
 public class User implements Parcelable {
     private String id;
     private String name;
-    private String message;
+    private String nickName;
     private String email;
     private String phoneNumber;
     private String photoUrl;
+    private String level;
 
     public void setUser(FirebaseUser firebaseUser) {
         setId(firebaseUser.getUid());
         setEmail(firebaseUser.getEmail());
         setPhoneNumber(firebaseUser.getPhoneNumber());
+        setLevel("0");
         Uri uri = firebaseUser.getPhotoUrl();
         if (uri != null) {
             setPhotoUrl(String.valueOf(firebaseUser.getPhotoUrl()));
@@ -29,7 +31,7 @@ public class User implements Parcelable {
         if (email != null && email.length() > 0) {
             String[] split = email.split("@");
             for (String s : split) {
-                setName(s);
+                setNickName(s);
                 break;
             }
         }
@@ -52,12 +54,12 @@ public class User implements Parcelable {
         this.name = name;
     }
 
-    public String getMessage() {
-        return message;
+    public String getNickName() {
+        return nickName;
     }
 
-    public void setMessage(String message) {
-        this.message = message;
+    public void setNickName(String nickName) {
+        this.nickName = nickName;
     }
 
     public String getEmail() {
@@ -84,6 +86,16 @@ public class User implements Parcelable {
         this.photoUrl = photoUrl;
     }
 
+    public String getLevel() {
+        return level;
+    }
+
+    public void setLevel(String level) {
+        this.level = level;
+    }
+
+    public User() {
+    }
 
     @Override
     public int describeContents() {
@@ -94,25 +106,24 @@ public class User implements Parcelable {
     public void writeToParcel(Parcel dest, int flags) {
         dest.writeString(this.id);
         dest.writeString(this.name);
-        dest.writeString(this.message);
+        dest.writeString(this.nickName);
         dest.writeString(this.email);
         dest.writeString(this.phoneNumber);
         dest.writeString(this.photoUrl);
-    }
-
-    public User() {
+        dest.writeString(this.level);
     }
 
     protected User(Parcel in) {
         this.id = in.readString();
         this.name = in.readString();
-        this.message = in.readString();
+        this.nickName = in.readString();
         this.email = in.readString();
         this.phoneNumber = in.readString();
         this.photoUrl = in.readString();
+        this.level = in.readString();
     }
 
-    public static final Parcelable.Creator<User> CREATOR = new Parcelable.Creator<User>() {
+    public static final Creator<User> CREATOR = new Creator<User>() {
         @Override
         public User createFromParcel(Parcel source) {
             return new User(source);
