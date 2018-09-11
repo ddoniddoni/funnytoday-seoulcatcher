@@ -9,7 +9,9 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -39,6 +41,7 @@ import todday.funny.seoulcatcher.R;
 import todday.funny.seoulcatcher.model.Schedule;
 import todday.funny.seoulcatcher.ui.adapter.ScheduleAdapter;
 import todday.funny.seoulcatcher.databinding.ScheduleBinding;
+import todday.funny.seoulcatcher.ui.dialog.ScheduleDialog;
 import todday.funny.seoulcatcher.util.CommonDecorator;
 import todday.funny.seoulcatcher.util.EventDecorator;
 import todday.funny.seoulcatcher.util.Keys;
@@ -182,17 +185,12 @@ public class ScheduleFragment extends Fragment {
                 final String datee = year + "," + month + "," + dayy;
                 for (int i = 0; i < eventDay.size(); i++) {
                     if (eventDay.get(i).equals(datee)) {
-                        AlertDialog.Builder alertDialog = new AlertDialog.Builder(context)
-                                .setTitle("교육을 신청하시겠습니까?")
-                                .setMessage(datee + "  " + "광나루")
-                                .setPositiveButton("신청", new DialogInterface.OnClickListener() {
-                                    @Override
-                                    public void onClick(DialogInterface dialogInterface, int i) {
-                                        inputScheduleDateBase(datee);
-                                    }
-                                })
-                                .setNegativeButton("취소", null);
-                        alertDialog.show();
+
+                        Bundle bundle= new Bundle();
+                        bundle.putString("date",datee);
+
+                        ScheduleDialog scheduleDialog = ScheduleDialog.newInstance(datee);
+                        scheduleDialog.show(getFragmentManager(),"scheduleDialog");
 
                     }
                 }
