@@ -20,6 +20,8 @@ import todday.funny.seoulcatcher.ui.fragment.HistoryFragment;
 import todday.funny.seoulcatcher.ui.fragment.ScheduleFragment;
 import todday.funny.seoulcatcher.ui.fragment.ProfileFragment;
 import todday.funny.seoulcatcher.ui.fragment.SettingFragment;
+import todday.funny.seoulcatcher.util.Keys;
+import todday.funny.seoulcatcher.util.SharedPrefsUtils;
 import todday.funny.seoulcatcher.viewmodel.MainViewModel;
 
 public class MainActivity extends BaseActivity {
@@ -29,8 +31,9 @@ public class MainActivity extends BaseActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        SharedPrefsUtils.setBooleanPreference(this, Keys.AUTO_LOGIN, true);
         binding = DataBindingUtil.setContentView(this, R.layout.activity_main);
-        model = getMainViewModel();
+        model = new MainViewModel(this);
         model.setNavigationItemSelectedListener();
         binding.setModel(model);
         model.initFragmentList(R.id.container);

@@ -28,10 +28,8 @@ public class ProfileFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_profile, container, false);
-        if (getActivity() != null && getActivity() instanceof BaseActivity) {
-            model = ((BaseActivity) getActivity()).getProfileViewModel();
-            binding.setModel(model);
-        }
+        model = new ProfileViewModel(getActivity());
+        binding.setModel(model);
         return binding.getRoot();
     }
 }

@@ -9,4 +9,7 @@
 
     <!--guide-->
     <string name="msg_quit">""뒤로" 버튼을 한번 더 누르시면 종료됩니다."</string>
+
+    <!--error-->
+    <string name="network_error">"네트워크 상태를 확인해 주세요."</string>
 </resources>

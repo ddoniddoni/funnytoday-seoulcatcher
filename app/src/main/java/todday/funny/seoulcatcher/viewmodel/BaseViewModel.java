@@ -5,12 +5,15 @@ import android.content.Context;
 import android.databinding.BaseObservable;
 
 import todday.funny.seoulcatcher.BaseActivity;
+import todday.funny.seoulcatcher.server.ServerDataController;
 
 public class BaseViewModel extends BaseObservable {
     public Context mContext;
+    public ServerDataController mServerDataController;
 
     public BaseViewModel(Context context) {
         mContext = context;
+        mServerDataController = ServerDataController.getInstance(context);
     }
 
     public void hideKeyBoard() {

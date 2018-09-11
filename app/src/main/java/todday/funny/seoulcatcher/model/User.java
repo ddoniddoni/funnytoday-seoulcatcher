@@ -1,7 +1,12 @@
 package todday.funny.seoulcatcher.model;
 
+import android.net.Uri;
 import android.os.Parcel;
 import android.os.Parcelable;
+
+import com.google.firebase.auth.FirebaseUser;
+
+import todday.funny.seoulcatcher.util.Keys;
 
 public class User implements Parcelable {
     private String id;
@@ -10,6 +15,26 @@ public class User implements Parcelable {
     private String email;
     private String phoneNumber;
     private String photoUrl;
+
+    public void setUser(FirebaseUser firebaseUser) {
+        setId(firebaseUser.getUid());
+        setEmail(firebaseUser.getEmail());
+        setPhoneNumber(firebaseUser.getPhoneNumber());
+        Uri uri = firebaseUser.getPhotoUrl();
+        if (uri != null) {
+            setPhotoUrl(String.valueOf(firebaseUser.getPhotoUrl()));
+        } else {
+            setPhotoUrl(Keys.DEFAULT_USER_PROFILE_URL);
+        }
+        if (email != null && email.length() > 0) {
+            String[] split = email.split("@");
+            for (String s : split) {
+                setName(s);
+                break;
+            }
+        }
+    }
+
 
     public String getId() {
         return id;

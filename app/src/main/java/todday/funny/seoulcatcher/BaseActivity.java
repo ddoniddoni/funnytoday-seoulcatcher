@@ -6,6 +6,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.inputmethod.InputMethodManager;
 
 import io.reactivex.disposables.CompositeDisposable;
+import todday.funny.seoulcatcher.server.ServerDataController;
 import todday.funny.seoulcatcher.util.ToastMake;
 import todday.funny.seoulcatcher.viewmodel.EducationViewModel;
 import todday.funny.seoulcatcher.viewmodel.HistoryViewModel;
@@ -19,8 +20,6 @@ public class BaseActivity extends AppCompatActivity {
 
     public CompositeDisposable compositeDisposable;
 
-    private MainViewModel mainViewModel;
-    private ProfileViewModel profileViewModel;
     private SettingViewModel settingViewModel;
     private EducationViewModel educationViewModel;
     private ScheduleViewModel scheduleViewModel;
@@ -73,12 +72,7 @@ public class BaseActivity extends AppCompatActivity {
     /**
      * 모델 가져오기
      */
-    public MainViewModel getMainViewModel() {
-        if (mainViewModel == null) {
-            mainViewModel = new MainViewModel(this);
-        }
-        return mainViewModel;
-    }
+
     public ScheduleViewModel getScheduleViewModel() {
         if (scheduleViewModel == null) {
             scheduleViewModel = new ScheduleViewModel(this);
@@ -92,12 +86,6 @@ public class BaseActivity extends AppCompatActivity {
         return educationViewModel;
     }
 
-    public ProfileViewModel getProfileViewModel() {
-        if (profileViewModel == null) {
-            profileViewModel = new ProfileViewModel(this);
-        }
-        return profileViewModel;
-    }
     public HistoryViewModel getHistoryViewModel() {
         if (historyViewModel == null) {
             historyViewModel = new HistoryViewModel(this);

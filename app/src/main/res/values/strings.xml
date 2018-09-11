@@ -16,4 +16,8 @@
 
     <!--guide-->
     <string name="msg_quit">"Pressing the "back" button ends."</string>
+
+
+    <!--error-->
+    <string name="network_error">"Please check the status of the network."</string>
 </resources>
