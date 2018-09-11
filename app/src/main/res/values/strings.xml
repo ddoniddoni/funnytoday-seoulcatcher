@@ -19,6 +19,7 @@
     <string name="email">"Email"</string>
     <string name="phone">"Phone"</string>
 
+    <string name="member_ship">"MemberShip"</string>
     <string name="nick_name">"Nick Name"</string>
     <string name="personal_information">"Personal information"</string>
     <string name="education_schedule">"Education schedule"</string>

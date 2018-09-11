@@ -13,6 +13,7 @@
     <string name="email">"이메일"</string>
     <string name="phone">"전화번호"</string>
 
+    <string name="member_ship">"멤버쉽"</string>
     <string name="nick_name">"닉네임"</string>
     <string name="personal_information">"개인정보"</string>
     <string name="education_schedule">"교육일정"</string>

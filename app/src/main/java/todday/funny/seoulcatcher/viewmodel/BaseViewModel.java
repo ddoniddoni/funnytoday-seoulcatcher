@@ -6,12 +6,15 @@ import android.databinding.BaseObservable;
 import android.databinding.ObservableBoolean;
 import android.support.v4.app.DialogFragment;
 
+import java.util.logging.Level;
+
 import io.reactivex.disposables.CompositeDisposable;
 import todday.funny.seoulcatcher.BaseActivity;
 import todday.funny.seoulcatcher.model.User;
 import todday.funny.seoulcatcher.server.ServerDataController;
 import todday.funny.seoulcatcher.ui.dialog.AlertDialogCreate;
 import todday.funny.seoulcatcher.ui.dialog.ImageViewerDialog;
+import todday.funny.seoulcatcher.ui.dialog.MembershipDialog;
 import todday.funny.seoulcatcher.ui.dialog.UserEditDialog;
 
 public class BaseViewModel extends BaseObservable {
@@ -61,6 +64,11 @@ public class BaseViewModel extends BaseObservable {
     public void openUserEdit(User user) {
         UserEditDialog dialog = UserEditDialog.newInstance(user);
         addFragmentDialog(dialog, android.R.transition.slide_right);
+    }
+
+    public void openMemberShip(String level) {
+        MembershipDialog dialog = MembershipDialog.newInstance(level);
+        addFragmentDialog(dialog, android.R.transition.slide_top);
     }
 
     /**

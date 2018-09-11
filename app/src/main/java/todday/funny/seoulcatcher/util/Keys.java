@@ -10,6 +10,8 @@ public class Keys {
     public static final String USER_PROFILE = "userProfile";
     public static final String USER_BACKGROUND = "userBackground";
 
+    public static final String LEVEL = "level";
+
     public static final String SCHEDULES = "schedules";
 
     public static final String AUTO_LOGIN = "autoLogin";
