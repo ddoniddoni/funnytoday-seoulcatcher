@@ -1,6 +1,7 @@
 package todday.funny.seoulcatcher.viewmodel;
 
 import android.content.Context;
+import android.databinding.ObservableArrayList;
 import android.databinding.ObservableBoolean;
 import android.databinding.ObservableField;
 import android.support.v4.widget.SwipeRefreshLayout;
@@ -9,15 +10,19 @@ import todday.funny.seoulcatcher.interactor.OnLoadUserDataFinishListener;
 import todday.funny.seoulcatcher.model.User;
 
 public class ProfileViewModel extends BaseViewModel implements SwipeRefreshLayout.OnRefreshListener {
+    public ObservableArrayList<Object> mWriteList = new ObservableArrayList<>();
+
     public ObservableField<String> mUserId = new ObservableField<>();
     public ObservableField<User> mUser = new ObservableField<>();
-    public ObservableBoolean isMy = new ObservableBoolean(false);
 
 
     public ProfileViewModel(Context context, String userId) {
         super(context);
-        mUserId.set(userId);
-        isMy.set(userId.equals(mServerDataController.mLoginUserId));
+        initData(userId);
+    }
+
+    private void initData(String userId) {
+        this.mUserId.set(userId);
         getUser(userId);
     }
 
@@ -27,6 +32,7 @@ public class ProfileViewModel extends BaseViewModel implements SwipeRefreshLayou
             @Override
             public void onFinish(User user) {
                 mUser.set(user);
+                mWriteList.add(0, user);
                 showLoading.set(false);
             }
         });
@@ -36,7 +42,7 @@ public class ProfileViewModel extends BaseViewModel implements SwipeRefreshLayou
     @Override
     public void onRefresh() {
         if (mUserId.get() != null) {
-            getUser(mUserId.get());
+            initData(mUserId.get());
         }
     }
 }
