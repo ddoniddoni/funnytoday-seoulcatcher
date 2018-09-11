@@ -7,6 +7,8 @@ public class Keys {
     public static final String USERS = "users";
     public static final String USER_ID = "userId";
 
+    public static final String SCHEDULES = "schedules";
+
     public static final String AUTO_LOGIN = "autoLogin";
 
     public static final String PATH = "path";

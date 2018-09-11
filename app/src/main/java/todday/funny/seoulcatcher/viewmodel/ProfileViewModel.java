@@ -30,7 +30,7 @@ public class ProfileViewModel extends BaseViewModel implements SwipeRefreshLayou
         showLoading.set(true);
         mServerDataController.getUser(userId, new OnLoadUserDataFinishListener() {
             @Override
-            public void onFinish(User user) {
+            public void onComplete(User user) {
                 mUser.set(user);
                 mWriteList.add(0, user);
                 showLoading.set(false);

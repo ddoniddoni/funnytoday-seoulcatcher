@@ -41,6 +41,7 @@ import todday.funny.seoulcatcher.ui.adapter.ScheduleAdapter;
 import todday.funny.seoulcatcher.databinding.ScheduleBinding;
 import todday.funny.seoulcatcher.util.CommonDecorator;
 import todday.funny.seoulcatcher.util.EventDecorator;
+import todday.funny.seoulcatcher.util.Keys;
 import todday.funny.seoulcatcher.util.SaturdayDecorator;
 import todday.funny.seoulcatcher.util.SundayDecorator;
 import todday.funny.seoulcatcher.util.TodayDecorator;
@@ -117,7 +118,7 @@ public class ScheduleFragment extends Fragment {
                 }
             }
         });*/
-        FirebaseFirestore.getInstance().collection("users").document(model.userUid).collection("schedule").addSnapshotListener(new EventListener<QuerySnapshot>() {
+        FirebaseFirestore.getInstance().collection(Keys.USERS).document(model.userUid).collection(Keys.SCHEDULES).addSnapshotListener(new EventListener<QuerySnapshot>() {
             @Override
             public void onEvent(@Nullable QuerySnapshot queryDocumentSnapshots, @Nullable FirebaseFirestoreException e) {
                 if(queryDocumentSnapshots.getDocuments() == null){
@@ -155,7 +156,7 @@ public class ScheduleFragment extends Fragment {
     }
 
     private void inputScheduleDateBase(final String date) {
-        FirebaseFirestore.getInstance().collection("users").document(model.userUid).collection("schedule").document().set(new Schedule(date))
+        FirebaseFirestore.getInstance().collection(Keys.USERS).document(model.userUid).collection(Keys.SCHEDULES).document().set(new Schedule(date))
                 .addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
                     public void onSuccess(Void aVoid) {
