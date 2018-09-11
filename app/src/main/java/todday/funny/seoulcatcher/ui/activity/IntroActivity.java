@@ -33,9 +33,10 @@ public class IntroActivity extends BaseActivity {
     private final int RC_SIGN_IN = 123;
 
     List<AuthUI.IdpConfig> providers = Arrays.asList(
+            new AuthUI.IdpConfig.GoogleBuilder().build(),
             new AuthUI.IdpConfig.EmailBuilder().build(),
-            new AuthUI.IdpConfig.PhoneBuilder().build(),
-            new AuthUI.IdpConfig.GoogleBuilder().build());
+            new AuthUI.IdpConfig.PhoneBuilder().build()
+    );
 
 
     @Override
@@ -71,12 +72,10 @@ public class IntroActivity extends BaseActivity {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == RC_SIGN_IN) {
             IdpResponse response = IdpResponse.fromResultIntent(data);
-
             if (resultCode == RESULT_OK) {
-                // Successfully signed in
-                StartActivity.startSingle(this, new Intent(this,MainActivity.class));
+                StartActivity.startSingle(this, new Intent(this, MainActivity.class));
             } else {
-                ToastMake.make(this,data.toString());
+                ToastMake.make(this, data.toString());
                 startActivityForResult(
                         AuthUI.getInstance()
                                 .createSignInIntentBuilder()
