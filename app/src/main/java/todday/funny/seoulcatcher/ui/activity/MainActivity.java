@@ -28,6 +28,9 @@ public class MainActivity extends BaseActivity {
     private MainBinding binding;
     private MainViewModel model;
 
+    private FragmentManager fragmentManager;
+    private FragmentTransaction fragmentTransaction;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
