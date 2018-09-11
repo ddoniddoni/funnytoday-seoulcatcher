@@ -30,4 +30,11 @@ public class AlertDialogCreate {
             }
         });
     }
+
+    public void deleteSchedule(DialogInterface.OnClickListener clickListener) {
+        alertDialog.setTitle("교육");
+        alertDialog.setMessage("해당 교육을 취소하시겠습니까?");
+        alertDialog.setPositiveButton("확인", clickListener);
+        alertDialog.show();
+    }
 }
