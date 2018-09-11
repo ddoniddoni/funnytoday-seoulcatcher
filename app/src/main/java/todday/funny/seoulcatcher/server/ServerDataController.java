@@ -122,7 +122,7 @@ public class ServerDataController {
      */
 
     public void getUserSchedule(String userId, final OnLoadScheduleListListener onLoadScheduleListListener) {
-        db.collection(Keys.USERS).document(userId).collection(Keys.SCHEDULES).orderBy("data", Query.Direction.DESCENDING).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+        db.collection(Keys.USERS).document(userId).collection(Keys.SCHEDULES).orderBy("date", Query.Direction.DESCENDING).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
             @Override
             public void onComplete(@NonNull Task<QuerySnapshot> task) {
                 ArrayList<Schedule> scheduleArrayList = new ArrayList<>();
