@@ -22,6 +22,7 @@ public class Keys {
     public static final String TRANS_NAME_IMAGE = "image";
 
     //브로드캐스트
+    public static final String EDIT_USER = "editUser";
     public static final String EDIT_USER_PROFILE = "edit_user_profile";
     public static final String EDIT_USER_BACKGROUND = "edit_user_background";
 }

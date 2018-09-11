@@ -19,6 +19,7 @@ import todday.funny.seoulcatcher.interactor.OnUploadFinishListener;
 import todday.funny.seoulcatcher.model.User;
 import todday.funny.seoulcatcher.util.Keys;
 import todday.funny.seoulcatcher.util.PermissionCheck;
+import todday.funny.seoulcatcher.util.SendBroadcast;
 import todday.funny.seoulcatcher.util.ShowIntent;
 import todday.funny.seoulcatcher.util.ToastMake;
 
@@ -30,8 +31,10 @@ public class UserEditViewModel extends UserViewModel {
     public int EDIT_USER_EMAIL = 2;
     public int EDIT_USER_PHONE = 3;
 
-    public ObservableBoolean isUserNameModify = new ObservableBoolean(false);
-    public ObservableBoolean isUserMessageModify = new ObservableBoolean(false);
+    public ObservableBoolean isUserNameModify = new ObservableBoolean(false); //네임 변경 유무
+    public ObservableBoolean isUserNickNameModify = new ObservableBoolean(false); //닉네임 변경유무
+    public ObservableBoolean isUseProfileModify = new ObservableBoolean(false); //프로필 변경유무
+    public ObservableBoolean isUserBackgroundModify = new ObservableBoolean(false); //백그라운드 변경유무
 
 
     public UserEditViewModel(Context context, User user) {
@@ -47,6 +50,7 @@ public class UserEditViewModel extends UserViewModel {
                     isUserNameModify.set(true);
                     user.setName(text.toString());
                 } else if (type == EDIT_USER_NICK_NAME) {
+                    isUserNickNameModify.set(true);
                     user.setNickName(text.toString());
                 } else if (type == EDIT_USER_EMAIL) {
                     user.setEmail(text.toString());
@@ -73,7 +77,7 @@ public class UserEditViewModel extends UserViewModel {
 
 
     public void editUser() {
-        if (clickTimeCheck()) {
+        if (clickTimeCheck() || showLoading.get()) {
             return;
         }
 
@@ -86,7 +90,10 @@ public class UserEditViewModel extends UserViewModel {
             ToastMake.make(mContext, R.string.hint_name);
             return;
         }
-        if (isUserNameModify.get() || isUserMessageModify.get()) {
+        if (isUserNameModify.get() || isUserNickNameModify.get() || isUseProfileModify.get() || isUserBackgroundModify.get()) { // 하나라도변경시 업뎃 브로딩캐스트 -> Profile ViewModel 로 전송
+            SendBroadcast.user(mContext, Keys.EDIT_USER, mUser.get());
+        }
+        if (isUserNameModify.get() || isUserNickNameModify.get()) {
             showLoading.set(true);
             mServerDataController.updateUser(user.getId(), user.getName(), user.getNickName(), new OnSuccessListener<Void>() {
                 @Override
@@ -124,6 +131,7 @@ public class UserEditViewModel extends UserViewModel {
                             showLoading.set(false);
                             mUser.get().setPhotoUrl(path);
                             mUser.notifyChange();
+                            isUseProfileModify.set(true);
                         }
                     });
 
@@ -136,6 +144,7 @@ public class UserEditViewModel extends UserViewModel {
                             showLoading.set(false);
                             mUser.get().setBackgroundUrl(path);
                             mUser.notifyChange();
+                            isUserBackgroundModify.set(true);
                         }
                     });
                 }

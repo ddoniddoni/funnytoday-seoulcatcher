@@ -26,6 +26,7 @@ import todday.funny.seoulcatcher.ui.fragment.ProfileFragment;
 import todday.funny.seoulcatcher.ui.fragment.SettingFragment;
 import todday.funny.seoulcatcher.util.Keys;
 import todday.funny.seoulcatcher.util.RequestCode;
+import todday.funny.seoulcatcher.util.SendBroadcast;
 import todday.funny.seoulcatcher.util.SharedPrefsUtils;
 import todday.funny.seoulcatcher.util.ShowIntent;
 import todday.funny.seoulcatcher.viewmodel.MainViewModel;
@@ -54,16 +55,12 @@ public class MainActivity extends BaseActivity {
                 ShowIntent.imageCroup(this, data, RequestCode.EDIT_USER_PROFILE_CROP);
             } else if (requestCode == RequestCode.EDIT_USER_PROFILE_CROP) {
                 String path = UCrop.getOutput(data).getPath();
-                Intent send = new Intent(Keys.EDIT_USER_PROFILE);
-                send.putExtra(Keys.PATH, path);
-                sendBroadcast(send);
+                SendBroadcast.path(this, Keys.EDIT_USER_PROFILE, path); // UserEditViewModel 로 전송
             } else if (requestCode == RequestCode.EDIT_USER_BACKGROUND_SELECT) {
                 ShowIntent.imageCroup(this, data, RequestCode.EDIT_USER_BACKGROUND_CROP);
             } else if (requestCode == RequestCode.EDIT_USER_BACKGROUND_CROP) {
                 String path = UCrop.getOutput(data).getPath();
-                Intent send = new Intent(Keys.EDIT_USER_BACKGROUND);
-                send.putExtra(Keys.PATH, path);
-                sendBroadcast(send);
+                SendBroadcast.path(this, Keys.EDIT_USER_BACKGROUND, path);
             }
         }
     }
