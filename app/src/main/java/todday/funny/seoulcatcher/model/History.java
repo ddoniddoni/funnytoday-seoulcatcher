@@ -1,11 +1,11 @@
 package todday.funny.seoulcatcher.model;
 
-public class HistoryModel {
+public class History {
     private String history;
 
-    public HistoryModel() { }
+    public History() { }
 
-    public HistoryModel(String history) {
+    public History(String history) {
         this.history = history;
     }
 
