@@ -155,7 +155,6 @@ public class ScheduleFragment extends Fragment {
     }
 
     private void inputScheduleDateBase(final String date) {
-
         FirebaseFirestore.getInstance().collection("users").document(model.userUid).collection("schedule").document().set(new ScheduleModel(date))
                 .addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
@@ -168,7 +167,6 @@ public class ScheduleFragment extends Fragment {
                 Log.e("데이터 베이스 삽입 실패", e.toString());
             }
         });
-
     }
 
     private void settingCalendar() {
