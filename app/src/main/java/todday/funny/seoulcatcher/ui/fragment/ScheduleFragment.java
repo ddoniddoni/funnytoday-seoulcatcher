@@ -36,7 +36,7 @@ import java.util.concurrent.Executors;
 
 import todday.funny.seoulcatcher.BaseActivity;
 import todday.funny.seoulcatcher.R;
-import todday.funny.seoulcatcher.adapter.ScheduleAdapter;
+import todday.funny.seoulcatcher.ui.adapter.ScheduleAdapter;
 import todday.funny.seoulcatcher.databinding.ScheduleBinding;
 import todday.funny.seoulcatcher.model.ScheduleModel;
 import todday.funny.seoulcatcher.util.CommonDecorator;

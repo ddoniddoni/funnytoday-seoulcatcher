@@ -12,6 +12,7 @@
     <string name="education">"Education"</string>
     <string name="educationSchedule">"Schedule"</string>
     <string name="history">"History"</string>
+    <string name="cancel">"Cancel"</string>
 
     <string name="education_schedule">"Education schedule"</string>
     <string name="level_text">"Level %s"</string>

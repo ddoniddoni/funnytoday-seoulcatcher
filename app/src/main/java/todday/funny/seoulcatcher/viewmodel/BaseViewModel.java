@@ -14,6 +14,7 @@ import android.view.View;
 import todday.funny.seoulcatcher.BaseActivity;
 import todday.funny.seoulcatcher.server.ServerDataController;
 import todday.funny.seoulcatcher.ui.activity.ImageViewerActivity;
+import todday.funny.seoulcatcher.ui.dialog.AlertDialogCreate;
 import todday.funny.seoulcatcher.ui.dialog.ImageViewerDialog;
 import todday.funny.seoulcatcher.util.Keys;
 
@@ -21,12 +22,14 @@ public class BaseViewModel extends BaseObservable {
     public long mLastClickTime = 0;
     public Context mContext;
     public ServerDataController mServerDataController;
+    public AlertDialogCreate mAlertDialogCreate;
 
     public ObservableBoolean showLoading = new ObservableBoolean(false);
 
     public BaseViewModel(Context context) {
         mContext = context;
         mServerDataController = ServerDataController.getInstance(context);
+        mAlertDialogCreate = AlertDialogCreate.getInstance(context);
     }
 
     public boolean clickTimeCheck() {
