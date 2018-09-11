@@ -22,6 +22,7 @@ import java.util.ArrayList;
 
 import todday.funny.seoulcatcher.R;
 import todday.funny.seoulcatcher.model.Schedule;
+import todday.funny.seoulcatcher.util.Keys;
 
 public class ScheduleAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
 
@@ -59,7 +60,7 @@ public class ScheduleAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
                             @Override
                             public void onClick(DialogInterface dialogInterface, int i) {
                                 Log.e("취소 확인!","성공!!!!!");
-                                FirebaseFirestore.getInstance().collection("users").document(uid).collection("schedule").document(scheduleModelsKey.get(position)).delete()
+                                FirebaseFirestore.getInstance().collection("users").document(uid).collection(Keys.SCHEDULES).document(scheduleModelsKey.get(position)).delete()
                                         .addOnSuccessListener(new OnSuccessListener<Void>() {
                                             @Override
                                             public void onSuccess(Void aVoid) {

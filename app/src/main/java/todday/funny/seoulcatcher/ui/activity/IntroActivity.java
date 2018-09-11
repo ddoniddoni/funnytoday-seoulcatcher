@@ -55,7 +55,12 @@ public class IntroActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         binding = DataBindingUtil.setContentView(this, R.layout.activity_intro);
         binding.animationLoader.setSpeed(1.5f);
-        mAutoLogin = SharedPrefsUtils.getBooleanPreference(this, Keys.AUTO_LOGIN, false);
+
+        if(FirebaseAuth.getInstance().getCurrentUser() != null) {
+            mAutoLogin = true;
+        }else {
+            mAutoLogin = false;
+        }
         mCompositeDisposable = new CompositeDisposable();
         mServerDataController = ServerDataController.getInstance(this);
         long delay = mAutoLogin ? 0 : 1500;
