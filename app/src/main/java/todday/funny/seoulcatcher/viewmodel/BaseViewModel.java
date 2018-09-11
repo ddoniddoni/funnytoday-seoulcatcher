@@ -2,21 +2,14 @@ package todday.funny.seoulcatcher.viewmodel;
 
 import android.app.Activity;
 import android.content.Context;
-import android.content.Intent;
 import android.databinding.BaseObservable;
 import android.databinding.ObservableBoolean;
-import android.os.Build;
-import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v4.app.DialogFragment;
-import android.support.v4.util.Pair;
-import android.view.View;
 
 import todday.funny.seoulcatcher.BaseActivity;
 import todday.funny.seoulcatcher.server.ServerDataController;
-import todday.funny.seoulcatcher.ui.activity.ImageViewerActivity;
 import todday.funny.seoulcatcher.ui.dialog.AlertDialogCreate;
 import todday.funny.seoulcatcher.ui.dialog.ImageViewerDialog;
-import todday.funny.seoulcatcher.util.Keys;
 
 public class BaseViewModel extends BaseObservable {
     public long mLastClickTime = 0;
