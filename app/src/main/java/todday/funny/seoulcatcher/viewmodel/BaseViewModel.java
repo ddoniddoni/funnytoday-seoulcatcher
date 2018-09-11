@@ -18,6 +18,7 @@ import todday.funny.seoulcatcher.ui.dialog.ImageViewerDialog;
 import todday.funny.seoulcatcher.util.Keys;
 
 public class BaseViewModel extends BaseObservable {
+    public long mLastClickTime = 0;
     public Context mContext;
     public ServerDataController mServerDataController;
 
@@ -26,6 +27,14 @@ public class BaseViewModel extends BaseObservable {
     public BaseViewModel(Context context) {
         mContext = context;
         mServerDataController = ServerDataController.getInstance(context);
+    }
+
+    public boolean clickTimeCheck() {
+        if (System.currentTimeMillis() - mLastClickTime < 700) {
+            return true;
+        }
+        mLastClickTime = System.currentTimeMillis();
+        return false;
     }
 
     public void hideKeyBoard() {
@@ -41,7 +50,7 @@ public class BaseViewModel extends BaseObservable {
         hideKeyBoard();
     }
 
-    public void openImageViewer( String path) {
+    public void openImageViewer(String path) {
         ImageViewerDialog dialog = ImageViewerDialog.newInstance(path);
         startFragmentDialog(dialog, android.R.transition.slide_top);
     }
@@ -50,6 +59,9 @@ public class BaseViewModel extends BaseObservable {
      * replace frahment
      */
     public void startFragmentDialog(DialogFragment dialogFragment, int transitionId) {
+        if (clickTimeCheck()) {
+            return;
+        }
         if (mContext instanceof BaseActivity) {
             ((BaseActivity) mContext).startFragmentDialog(dialogFragment, transitionId);
         }
@@ -59,6 +71,9 @@ public class BaseViewModel extends BaseObservable {
      * add frahment
      */
     public void addFragmentDialog(DialogFragment dialogFragment, int transitionId) {
+        if (clickTimeCheck()) {
+            return;
+        }
         if (mContext instanceof BaseActivity) {
             ((BaseActivity) mContext).addFragmentDialog(dialogFragment, transitionId);
         }
