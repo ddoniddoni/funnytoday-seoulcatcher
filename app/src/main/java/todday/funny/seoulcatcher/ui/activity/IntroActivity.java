@@ -65,7 +65,7 @@ public class IntroActivity extends BaseActivity {
                 .subscribe(new Consumer<Long>() {
                     @Override
                     public void accept(Long aLong) throws Exception {
-                        if (!mAutoLogin) { //자동로그인
+                        if (mAutoLogin) { //자동로그인
                             startMainActivity();
                         } else {
                             startActivityForResult(
