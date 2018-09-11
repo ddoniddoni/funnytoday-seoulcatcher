@@ -1,9 +1,12 @@
 package todday.funny.seoulcatcher.server;
 
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.net.Uri;
 import android.support.annotation.NonNull;
 import android.util.Log;
 
+import com.google.android.gms.tasks.Continuation;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -16,19 +19,27 @@ import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QuerySnapshot;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
 
+import java.io.ByteArrayOutputStream;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 import io.reactivex.Single;
 import io.reactivex.SingleEmitter;
 import io.reactivex.SingleOnSubscribe;
 import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.disposables.CompositeDisposable;
+import io.reactivex.functions.Consumer;
 import io.reactivex.schedulers.Schedulers;
 import todday.funny.seoulcatcher.R;
 import todday.funny.seoulcatcher.interactor.OnLoadScheduleListListener;
 import todday.funny.seoulcatcher.interactor.OnLoadUserDataFinishListener;
+import todday.funny.seoulcatcher.interactor.OnUploadFinishListener;
 import todday.funny.seoulcatcher.model.Schedule;
 import todday.funny.seoulcatcher.model.User;
+import todday.funny.seoulcatcher.util.ImageConverter;
 import todday.funny.seoulcatcher.util.Keys;
 import todday.funny.seoulcatcher.util.ToastMake;
 
@@ -70,6 +81,20 @@ public class ServerDataController {
         storage = FirebaseStorage.getInstance();
         storageReference = storage.getReference();
     }
+
+    //ur 가져오기
+    private void getImageDownLoadURL(@NonNull UploadTask uploadTask, @NonNull OnCompleteListener onCompleteListener) {
+        uploadTask.continueWithTask(new Continuation<UploadTask.TaskSnapshot, Task<Uri>>() {
+            @Override
+            public Task<Uri> then(@NonNull Task<UploadTask.TaskSnapshot> task) throws Exception {
+                if (!task.isSuccessful()) {
+                    throw task.getException();
+                }
+                return task.getResult().getStorage().getDownloadUrl();
+            }
+        }).addOnCompleteListener(onCompleteListener);
+    }
+
 
     /**
      * 유저관련
@@ -115,6 +140,66 @@ public class ServerDataController {
                 }
             });
         }
+    }
+
+    public void updateUser(String userId, String name, String nickName, OnSuccessListener<Void> onSuccessListener, OnFailureListener onFailureListener) {
+        Log.d(TAG + "updateUser", "userId = " + userId);
+        Map<String, Object> updateUser = new HashMap<>();
+        updateUser.put("name", name);
+        updateUser.put("nickName", nickName);
+        if (onSuccessListener != null && onFailureListener != null) {
+            db.collection(Keys.USERS).document(userId).update(updateUser)
+                    .addOnSuccessListener(onSuccessListener)
+                    .addOnFailureListener(onFailureListener);
+        }
+    }
+
+
+    //유저 프로파일 업데이트
+    public void updateUserProfile(CompositeDisposable compositeDisposable, final String userId, String profileUrl, final OnUploadFinishListener onUploadFinishListener) {
+        compositeDisposable.add(ImageConverter.stringToBitmap(mContext, profileUrl).subscribe(new Consumer<Bitmap>() {
+            @Override
+            public void accept(Bitmap bitmap) throws Exception {
+                ByteArrayOutputStream baos = new ByteArrayOutputStream();
+                bitmap.compress(Bitmap.CompressFormat.PNG, 100, baos);
+                byte[] data = baos.toByteArray();
+                UploadTask uploadTask = storageReference.child(Keys.USERS).child(userId).child(Keys.USER_PROFILE).putBytes(data);
+                getImageDownLoadURL(uploadTask, new OnCompleteListener<Uri>() {
+                    @Override
+                    public void onComplete(@NonNull Task<Uri> task) {
+                        if (task.isSuccessful()) {
+                            Uri downloadUri = task.getResult();
+
+                            db.collection(Keys.USERS).document(userId).update("photoUrl", String.valueOf(downloadUri));
+                            onUploadFinishListener.onUploadFinish(String.valueOf(downloadUri));
+                        }
+                    }
+                });
+            }
+        }));
+    }
+
+    //유저 배경 업데이트
+    public void updateUserBackground(CompositeDisposable compositeDisposable, final String userId, String backgroundUrl, final OnUploadFinishListener onUploadFinishListener) {
+        compositeDisposable.add(ImageConverter.stringToBitmap(mContext, backgroundUrl).subscribe(new Consumer<Bitmap>() {
+            @Override
+            public void accept(Bitmap bitmap) throws Exception {
+                ByteArrayOutputStream baos = new ByteArrayOutputStream();
+                bitmap.compress(Bitmap.CompressFormat.PNG, 100, baos);
+                byte[] data = baos.toByteArray();
+                UploadTask uploadTask = storageReference.child(Keys.USERS).child(userId).child(Keys.USER_BACKGROUND).putBytes(data);
+                getImageDownLoadURL(uploadTask, new OnCompleteListener<Uri>() {
+                    @Override
+                    public void onComplete(@NonNull Task<Uri> task) {
+                        if (task.isSuccessful()) {
+                            Uri downloadUri = task.getResult();
+                            db.collection(Keys.USERS).document(userId).update("backgroundUrl", String.valueOf(downloadUri));
+                            onUploadFinishListener.onUploadFinish(String.valueOf(downloadUri));
+                        }
+                    }
+                });
+            }
+        }));
     }
 
     /**

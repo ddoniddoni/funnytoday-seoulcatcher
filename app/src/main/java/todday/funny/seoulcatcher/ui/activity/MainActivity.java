@@ -1,14 +1,18 @@
 package todday.funny.seoulcatcher.ui.activity;
 
 import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.view.MenuItem;
+
+import com.yalantis.ucrop.UCrop;
 
 import java.util.List;
 
@@ -21,15 +25,15 @@ import todday.funny.seoulcatcher.ui.fragment.ScheduleFragment;
 import todday.funny.seoulcatcher.ui.fragment.ProfileFragment;
 import todday.funny.seoulcatcher.ui.fragment.SettingFragment;
 import todday.funny.seoulcatcher.util.Keys;
+import todday.funny.seoulcatcher.util.RequestCode;
 import todday.funny.seoulcatcher.util.SharedPrefsUtils;
+import todday.funny.seoulcatcher.util.ShowIntent;
 import todday.funny.seoulcatcher.viewmodel.MainViewModel;
 
 public class MainActivity extends BaseActivity {
     private MainBinding binding;
     private MainViewModel model;
 
-    private FragmentManager fragmentManager;
-    private FragmentTransaction fragmentTransaction;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,5 +44,27 @@ public class MainActivity extends BaseActivity {
         model.setNavigationItemSelectedListener();
         binding.setModel(model);
         model.initFragmentList(R.id.container);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (data != null && resultCode == RESULT_OK) {
+            if (requestCode == RequestCode.EDIT_USER_PROFILE_SELECT) {
+                ShowIntent.imageCroup(this, data, RequestCode.EDIT_USER_PROFILE_CROP);
+            } else if (requestCode == RequestCode.EDIT_USER_PROFILE_CROP) {
+                String path = UCrop.getOutput(data).getPath();
+                Intent send = new Intent(Keys.EDIT_USER_PROFILE);
+                send.putExtra(Keys.PATH, path);
+                sendBroadcast(send);
+            } else if (requestCode == RequestCode.EDIT_USER_BACKGROUND_SELECT) {
+                ShowIntent.imageCroup(this, data, RequestCode.EDIT_USER_BACKGROUND_CROP);
+            } else if (requestCode == RequestCode.EDIT_USER_BACKGROUND_CROP) {
+                String path = UCrop.getOutput(data).getPath();
+                Intent send = new Intent(Keys.EDIT_USER_BACKGROUND);
+                send.putExtra(Keys.PATH, path);
+                sendBroadcast(send);
+            }
+        }
     }
 }

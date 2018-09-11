@@ -6,24 +6,39 @@
 
     <string name="hello_blank_fragment">Hello blank fragment</string>
 
-
+    <string name="ok">"OK"</string>
     <string name="profile">"Profile"</string>
     <string name="setting">"Setting"</string>
     <string name="education">"Education"</string>
     <string name="educationSchedule">"Schedule"</string>
     <string name="history">"History"</string>
     <string name="cancel">"Cancel"</string>
+    <string name="modify">"Modify"</string>
+    <string name="basics">"Basics"</string>
+    <string name="name">"Name"</string>
+    <string name="email">"Email"</string>
+    <string name="phone">"Phone"</string>
 
+    <string name="nick_name">"Nick Name"</string>
+    <string name="personal_information">"Personal information"</string>
     <string name="education_schedule">"Education schedule"</string>
     <string name="level_text">"Level %s"</string>
+    <string name="edit_image">"Edit Image"</string>
 
     <string name="days_ago">" days ago"</string>
     <string name="days_remaining">" days remaining"</string>
 
+    <!--hint-->
+    <string name="hint_email">"Please enter a email."</string>
+    <string name="hint_phone">"Please enter a phone."</string>
+    <string name="hint_name">"Please enter a name."</string>
+    <string name="hint_title">"Please enter a title."</string>
+    <string name="hint_content">"Please enter a content."</string>
+
     <!--guide-->
     <string name="msg_quit">"Pressing the "back" button ends."</string>
 
-
     <!--error-->
+    <string name="error_permission">"Permissions must be allowed to use."</string>
     <string name="network_error">"Please check the status of the network."</string>
 </resources>
