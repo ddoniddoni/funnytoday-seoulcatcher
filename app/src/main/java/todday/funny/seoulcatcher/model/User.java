@@ -17,6 +17,7 @@ public class User implements Parcelable {
     private String photoUrl;
     private String backgroundUrl;
     private String level;
+    private boolean emailAuth;
 
     public void setUser(FirebaseUser firebaseUser) {
         setId(firebaseUser.getUid());
@@ -105,6 +106,14 @@ public class User implements Parcelable {
         this.level = level;
     }
 
+    public boolean isEmailAuth() {
+        return emailAuth;
+    }
+
+    public void setEmailAuth(boolean emailAuth) {
+        this.emailAuth = emailAuth;
+    }
+
     public User() {
     }
 
@@ -123,6 +132,7 @@ public class User implements Parcelable {
         dest.writeString(this.photoUrl);
         dest.writeString(this.backgroundUrl);
         dest.writeString(this.level);
+        dest.writeByte(this.emailAuth ? (byte) 1 : (byte) 0);
     }
 
     protected User(Parcel in) {
@@ -134,6 +144,7 @@ public class User implements Parcelable {
         this.photoUrl = in.readString();
         this.backgroundUrl = in.readString();
         this.level = in.readString();
+        this.emailAuth = in.readByte() != 0;
     }
 
     public static final Creator<User> CREATOR = new Creator<User>() {

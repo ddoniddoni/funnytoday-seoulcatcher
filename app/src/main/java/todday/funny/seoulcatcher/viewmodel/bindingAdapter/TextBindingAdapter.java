@@ -5,13 +5,19 @@ import android.databinding.BindingAdapter;
 import android.widget.TextView;
 
 import todday.funny.seoulcatcher.R;
+import todday.funny.seoulcatcher.util.DateFormat;
 
 public class TextBindingAdapter {
-    @BindingAdapter({"setLevleText"})
-    public static void setLevleText(TextView view, String level) {
+    @BindingAdapter({"setLevelText"})
+    public static void setLevelText(TextView view, String level) {
         Context context = view.getContext();
         String levelText = context.getString(R.string.level_text, level);
         view.setText(levelText);
+    }
 
+    @BindingAdapter({"setDdayText"})
+    public static void setDdayText(TextView view, String date) {
+        Context context = view.getContext();
+        view.setText(DateFormat.getDdayStringFromCalendar(context, date));
     }
 }

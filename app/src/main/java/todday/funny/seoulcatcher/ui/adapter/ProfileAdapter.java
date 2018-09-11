@@ -4,6 +4,7 @@ import android.content.Context;
 import android.databinding.DataBindingUtil;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
 
@@ -41,7 +42,6 @@ public class ProfileAdapter extends RecyclerView.Adapter {
 
     @Override
     public long getItemId(int position) {
-
         if (mItemList != null) {
             if (mItemList.get(position) instanceof User) {
                 User user = (User) mItemList.get(position);
@@ -83,6 +83,7 @@ public class ProfileAdapter extends RecyclerView.Adapter {
     @Override
     public int getItemCount() {
         if (mItemList != null) {
+            Log.e("test", String.valueOf(mItemList.size()));
             return mItemList.size();
         }
         return 0;

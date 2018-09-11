@@ -2,18 +2,39 @@
 <resources>
     <string name="app_name">SeoulCatcher</string>
 
-
+    <string name="ok">"확인"</string>
     <string name="profile">"프로필"</string>
     <string name="setting">"설정"</string>
     <string name="education">"교육"</string>
     <string name="cancel">"취소"</string>
+    <string name="modify">"수정"</string>
+    <string name="basics">"기본"</string>
+    <string name="name">"이름"</string>
+    <string name="email">"이메일"</string>
+    <string name="phone">"전화번호"</string>
 
+    <string name="member_ship">"멤버쉽"</string>
+    <string name="nick_name">"닉네임"</string>
+    <string name="personal_information">"개인정보"</string>
     <string name="education_schedule">"교육일정"</string>
     <string name="level_text">"레벨 %s"</string>
+    <string name="edit_image">"이미지 편집"</string>
+
+    <string name="days_ago">"일 지남"</string>
+    <string name="days_remaining">"일 남음"</string>
+
+    <!--hint-->
+    <string name="hint_name">"이름을 입력해주세요."</string>
+    <string name="hint_message">"내용을 입력해주세요."</string>
+    <string name="hint_email">"이메일을 입력해주세요."</string>
+    <string name="hint_phone">"전화번호를 입력해주세요."</string>
+    <string name="hint_title">"제목을 입력해주세요."</string>
+    <string name="hint_content">"내용을 입력해주세요."</string>
 
     <!--guide-->
     <string name="msg_quit">""뒤로" 버튼을 한번 더 누르시면 종료됩니다."</string>
 
     <!--error-->
+    <string name="error_permission">"권한을 허용해야 사용 할 수 있습니다."</string>
     <string name="network_error">"네트워크 상태를 확인해 주세요."</string>
 </resources>
