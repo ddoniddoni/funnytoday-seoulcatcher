@@ -11,6 +11,9 @@
     <string name="education_schedule">"교육일정"</string>
     <string name="level_text">"레벨 %s"</string>
 
+    <string name="days_ago">"일 지남"</string>
+    <string name="days_remaining">"일 남음"</string>
+
     <!--guide-->
     <string name="msg_quit">""뒤로" 버튼을 한번 더 누르시면 종료됩니다."</string>
 

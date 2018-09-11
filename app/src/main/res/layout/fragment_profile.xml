@@ -60,7 +60,7 @@
             android:background="@color/gray_light" />
 
         <android.support.v7.widget.RecyclerView
-            setProfileAdapter="@{model.mWriteList}"
+            setProfileAdapter="@{model.mProfileList}"
             android:layout_width="match_parent"
             android:layout_height="match_parent" />
     </LinearLayout>
