@@ -52,9 +52,8 @@ public class ServerDataController {
     private FirebaseFirestore db; //Cloud FireBase
     private FirebaseStorage storage; //소티지
     private StorageReference storageReference;
-    public String mLoginUserId;
-    public User mLoginUser;
-
+    private User mLoginUser;
+    private String mLoginUserId;
     private int LIMIT_COUNT = 6;
 
     private static volatile ServerDataController singletonInstance = null;
@@ -73,7 +72,6 @@ public class ServerDataController {
 
     private ServerDataController(Context context) {
         mContext = context;
-        mLoginUserId = FirebaseAuth.getInstance().getCurrentUser().getUid();
         db = FirebaseFirestore.getInstance();
         FirebaseFirestoreSettings settings = new FirebaseFirestoreSettings.Builder()
                 .setPersistenceEnabled(true)
@@ -82,6 +80,15 @@ public class ServerDataController {
 
         storage = FirebaseStorage.getInstance();
         storageReference = storage.getReference();
+    }
+
+    public String getLoginUserId() {
+        if (mLoginUserId == null) {
+            if (FirebaseAuth.getInstance().getCurrentUser() != null) {
+                mLoginUserId = FirebaseAuth.getInstance().getCurrentUser().getUid();
+            }
+        }
+        return mLoginUserId;
     }
 
     //ur 가져오기
@@ -114,7 +121,7 @@ public class ServerDataController {
             @Override
             public void subscribe(final SingleEmitter<User> emitter) throws Exception {
                 if (mLoginUser == null) {
-                    getUser(mLoginUserId, new OnLoadUserDataFinishListener() {
+                    getUser(getLoginUserId(), new OnLoadUserDataFinishListener() {
                         @Override
                         public void onComplete(User user) {
                             mLoginUser = user;
@@ -131,7 +138,7 @@ public class ServerDataController {
 
     public void getUser(String userId, @NonNull final OnLoadUserDataFinishListener onLoadUserDataFinishListener) {
         Log.d(TAG + "getUser", "userId = " + userId);
-        if (userId.equals(mLoginUserId) && mLoginUser != null) {
+        if (userId.equals(getLoginUserId()) && mLoginUser != null) {
             onLoadUserDataFinishListener.onComplete(mLoginUser);
         } else {
             db.collection(Keys.USERS).document(userId).get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {

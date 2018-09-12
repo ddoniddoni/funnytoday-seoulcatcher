@@ -10,9 +10,10 @@ public class UserViewModel extends BaseViewModel {
     public ObservableField<User> mUser = new ObservableField<>();
 
     public ObservableBoolean isMy = new ObservableBoolean(false);
+
     public UserViewModel(Context context, User user) {
         super(context);
-        isMy.set(user.getId().equals(mServerDataController.mLoginUserId));
+        isMy.set(user.getId().equals(mServerDataController.getLoginUserId()));
         mUser.set(user);
     }
 }

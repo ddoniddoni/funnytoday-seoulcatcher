@@ -39,7 +39,6 @@ public class MainActivity extends BaseActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        SharedPrefsUtils.setBooleanPreference(this, Keys.AUTO_LOGIN, true);
         binding = DataBindingUtil.setContentView(this, R.layout.activity_main);
         model = new MainViewModel(this);
         model.setNavigationItemSelectedListener();
