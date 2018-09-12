@@ -20,6 +20,7 @@ public class Keys {
 
     public static final String LEVEL = "level";
 
+    public static final String EMPTY = "empty";
 
     public static final String AUTO_LOGIN = "autoLogin";
 

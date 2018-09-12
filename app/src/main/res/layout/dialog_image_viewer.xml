@@ -37,14 +37,5 @@
             android:tint="@color/white"
             app:srcCompat="@drawable/ic_keyboard_backspace_black_24dp" />
 
-
-        <android.support.v7.widget.AppCompatImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:padding="16dp"
-            android:tint="@color/white"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintRight_toRightOf="parent"
-            app:srcCompat="@drawable/ic_file_download_black_24dp" />
     </android.support.constraint.ConstraintLayout>
 </layout>

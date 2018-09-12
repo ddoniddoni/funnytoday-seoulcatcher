@@ -6,21 +6,25 @@ import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.View;
 import android.view.ViewGroup;
 
 import java.util.List;
 
 import todday.funny.seoulcatcher.R;
+import todday.funny.seoulcatcher.databinding.ProfileEmptyBinding;
 import todday.funny.seoulcatcher.databinding.ProfileScheduleBinding;
 import todday.funny.seoulcatcher.databinding.UserBinding;
 import todday.funny.seoulcatcher.model.Schedule;
 import todday.funny.seoulcatcher.model.User;
+import todday.funny.seoulcatcher.viewmodel.EmptyViewModel;
 import todday.funny.seoulcatcher.viewmodel.ScheduleViewModel;
 import todday.funny.seoulcatcher.viewmodel.UserViewModel;
 
 public class ProfileAdapter extends RecyclerView.Adapter {
     private int USER_TYPE = 0;
     private int SCHEDULE_TYPE = 1;
+    private int EMPTY_TYPE = 2;
 
     private Context mContext;
     private List<Object> mItemList;
@@ -35,8 +39,10 @@ public class ProfileAdapter extends RecyclerView.Adapter {
         Object item = mItemList.get(position);
         if (item instanceof User) {
             return USER_TYPE;
-        } else {
+        } else if (item instanceof Schedule) {
             return SCHEDULE_TYPE;
+        } else {
+            return EMPTY_TYPE;
         }
     }
 
@@ -58,9 +64,12 @@ public class ProfileAdapter extends RecyclerView.Adapter {
         if (viewType == USER_TYPE) {
             UserBinding binding = DataBindingUtil.inflate(LayoutInflater.from(viewGroup.getContext()), R.layout.item_user_profile, viewGroup, false);
             return new UserHeaderViewHolder(binding);
-        } else {
+        } else if (viewType == SCHEDULE_TYPE) {
             ProfileScheduleBinding binding = DataBindingUtil.inflate(LayoutInflater.from(viewGroup.getContext()), R.layout.item_profile_schedule, viewGroup, false);
             return new ProfileScheduleViewHolder(binding);
+        } else {
+            ProfileEmptyBinding binding = DataBindingUtil.inflate(LayoutInflater.from(viewGroup.getContext()), R.layout.item_profile_empty, viewGroup, false);
+            return new ProfileEmptyViewHolder(binding);
         }
     }
 
@@ -76,6 +85,10 @@ public class ProfileAdapter extends RecyclerView.Adapter {
             ProfileScheduleViewHolder holder = (ProfileScheduleViewHolder) viewHolder;
             Schedule schedule = (Schedule) mItemList.get(position);
             ScheduleViewModel model = new ScheduleViewModel(mContext, schedule);
+            holder.setViewModel(model);
+        } else if (viewType == EMPTY_TYPE) {
+            ProfileEmptyViewHolder holder = (ProfileEmptyViewHolder) viewHolder;
+            EmptyViewModel model = new EmptyViewModel(mContext, mContext.getString(R.string.empty_profile));
             holder.setViewModel(model);
         }
     }
@@ -113,6 +126,20 @@ public class ProfileAdapter extends RecyclerView.Adapter {
 
         public void setViewModel(ScheduleViewModel viewModel) {
             binding.setModel(viewModel);
+            binding.executePendingBindings();
+        }
+    }
+
+    private class ProfileEmptyViewHolder extends RecyclerView.ViewHolder {
+        private ProfileEmptyBinding binding;
+
+        public ProfileEmptyViewHolder(@NonNull ProfileEmptyBinding binding) {
+            super(binding.getRoot());
+            this.binding = binding;
+        }
+
+        public void setViewModel(EmptyViewModel model) {
+            binding.setModel(model);
             binding.executePendingBindings();
         }
     }

@@ -18,7 +18,7 @@ import todday.funny.seoulcatcher.model.Schedule;
 import todday.funny.seoulcatcher.model.User;
 import todday.funny.seoulcatcher.util.Keys;
 
-public class ProfileViewModel extends BaseViewModel {
+public class ProfileViewModel extends BaseViewModel implements SwipeRefreshLayout.OnRefreshListener {
     public ObservableArrayList<Object> mProfileList = new ObservableArrayList<>();
 
     public ObservableField<String> mUserId = new ObservableField<>();
@@ -27,11 +27,12 @@ public class ProfileViewModel extends BaseViewModel {
 
     public ProfileViewModel(Context context, String userId) {
         super(context);
+        this.mUserId.set(userId);
         initData(userId);
     }
 
     private void initData(String userId) {
-        this.mUserId.set(userId);
+        mProfileList.clear();
         getUser(userId);
     }
 
@@ -53,7 +54,11 @@ public class ProfileViewModel extends BaseViewModel {
         mServerDataController.getUserSchedule(userId, new OnLoadScheduleListListener() {
             @Override
             public void onComplete(List<Schedule> scheduleList) {
-                mProfileList.addAll(scheduleList);
+                if (scheduleList != null && scheduleList.size() > 0) {
+                    mProfileList.addAll(scheduleList);
+                } else {
+                    mProfileList.add(Keys.EMPTY);
+                }
                 showLoading.set(false);
             }
         });
@@ -86,6 +91,11 @@ public class ProfileViewModel extends BaseViewModel {
         IntentFilter intentFilter = new IntentFilter();
         intentFilter.addAction(Keys.EDIT_USER);
         return intentFilter;
+    }
+
+    @Override
+    public void onRefresh() {
+        initData(mUserId.get());
     }
 }
 
