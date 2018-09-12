@@ -19,6 +19,7 @@
     <string name="email">"Email"</string>
     <string name="phone">"Phone"</string>
     <string name="start">"Start"</string>
+    <string name="qr">"QR"</string>
     <string name="certified">"Certified"</string>
 
     <string name="member_ship">"MemberShip"</string>
@@ -34,6 +35,7 @@
     <string name="days_remaining">" days remaining"</string>
 
     <string name="member_ship_user_level">"%s is\n a member of level %s."</string>
+    <string name="check_qr_code">"Check QR code"</string>
 
 
     <!--hint-->
@@ -45,6 +47,7 @@
 
     <!--guide-->
     <string name="msg_quit">"Pressing the "back" button ends."</string>
+    <string name="msg_attendance">"Successfully attended. "</string>
 
     <!--empty-->
     <string name="empty_title">"Get Started"</string>

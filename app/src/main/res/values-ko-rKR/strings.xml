@@ -26,6 +26,7 @@
     <string name="days_remaining">"일 남음"</string>
 
     <string name="member_ship_user_level">"%s님은\nLevel %s 회원 입니다."</string>
+    <string name="check_qr_code">"QR 코드 확인"</string>
 
 
     <!--hint-->
@@ -38,6 +39,7 @@
 
     <!--guide-->
     <string name="msg_quit">""뒤로" 버튼을 한번 더 누르시면 종료됩니다."</string>
+    <string name="msg_attendance">"성공적으로 출석했습니다. "</string>
 
     <!--empty-->
     <string name="empty_title">"시작하기"</string>

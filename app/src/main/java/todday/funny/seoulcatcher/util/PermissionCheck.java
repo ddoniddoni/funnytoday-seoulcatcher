@@ -14,4 +14,11 @@ public class PermissionCheck {
                 .setPermissions(Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE)
                 .check();
     }
+
+    public static void cameraCheck(Context context, PermissionListener permissionListener) {
+        TedPermission.with(context)
+                .setPermissionListener(permissionListener)
+                .setPermissions(Manifest.permission.CAMERA)
+                .check();
+    }
 }

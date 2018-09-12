@@ -123,25 +123,30 @@ public class BaseActivity extends AppCompatActivity {
      */
 
     public void startFragmentDialog(DialogFragment dialogFragment, int transitionId) {
+        String fragmentTag = dialogFragment.getClass().getSimpleName();
+
         FragmentManager fragmentManager = getSupportFragmentManager();
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             dialogFragment.setEnterTransition(TransitionInflater.from(this).inflateTransition(transitionId));
         }
+        fragmentManager.popBackStack(fragmentTag, FragmentManager.POP_BACK_STACK_INCLUSIVE);
         FragmentTransaction transaction = fragmentManager.beginTransaction();
         transaction.setReorderingAllowed(true)
-                .addToBackStack(null)
+                .addToBackStack(fragmentTag)
                 .replace(android.R.id.content, dialogFragment)
                 .commit();
     }
 
     public void addFragmentDialog(DialogFragment dialogFragment, int transitionId) {
+        String fragmentTag = dialogFragment.getClass().getSimpleName();
         FragmentManager fragmentManager = getSupportFragmentManager();
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             dialogFragment.setEnterTransition(TransitionInflater.from(this).inflateTransition(transitionId));
         }
+        fragmentManager.popBackStack(fragmentTag, FragmentManager.POP_BACK_STACK_INCLUSIVE);
         FragmentTransaction transaction = fragmentManager.beginTransaction();
         transaction.setReorderingAllowed(true)
-                .addToBackStack(null)
+                .addToBackStack(fragmentTag)
                 .add(android.R.id.content, dialogFragment)
                 .commit();
     }

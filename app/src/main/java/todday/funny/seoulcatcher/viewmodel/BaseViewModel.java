@@ -6,16 +6,24 @@ import android.databinding.BaseObservable;
 import android.databinding.ObservableBoolean;
 import android.support.v4.app.DialogFragment;
 
+import com.gun0912.tedpermission.PermissionListener;
+
+import java.util.ArrayList;
 import java.util.logging.Level;
 
 import io.reactivex.disposables.CompositeDisposable;
 import todday.funny.seoulcatcher.BaseActivity;
+import todday.funny.seoulcatcher.R;
 import todday.funny.seoulcatcher.model.User;
 import todday.funny.seoulcatcher.server.ServerDataController;
 import todday.funny.seoulcatcher.ui.dialog.AlertDialogCreate;
 import todday.funny.seoulcatcher.ui.dialog.ImageViewerDialog;
 import todday.funny.seoulcatcher.ui.dialog.MembershipDialog;
+import todday.funny.seoulcatcher.ui.dialog.QRDialog;
 import todday.funny.seoulcatcher.ui.dialog.UserEditDialog;
+import todday.funny.seoulcatcher.util.PermissionCheck;
+import todday.funny.seoulcatcher.util.ShowIntent;
+import todday.funny.seoulcatcher.util.ToastMake;
 
 public class BaseViewModel extends BaseObservable {
     public long mLastClickTime = 0;
@@ -69,6 +77,21 @@ public class BaseViewModel extends BaseObservable {
     public void openMemberShip(String level) {
         MembershipDialog dialog = MembershipDialog.newInstance(level);
         addFragmentDialog(dialog, android.R.transition.slide_top);
+    }
+
+    public void openQR(final User user) {
+        PermissionCheck.cameraCheck(mContext, new PermissionListener() {
+            @Override
+            public void onPermissionGranted() {
+                QRDialog dialog = QRDialog.newInstance(user);
+                startFragmentDialog(dialog, android.R.transition.slide_top);
+            }
+
+            @Override
+            public void onPermissionDenied(ArrayList<String> deniedPermissions) {
+                ToastMake.make(mContext, R.string.error_permission);
+            }
+        });
     }
 
     /**

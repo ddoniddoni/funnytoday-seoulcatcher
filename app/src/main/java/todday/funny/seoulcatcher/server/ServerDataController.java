@@ -164,6 +164,18 @@ public class ServerDataController {
         }
     }
 
+    public void updateUserLevel(User user, OnSuccessListener<Void> onSuccessListener, OnFailureListener onFailureListener) {
+        Log.d(TAG + "updateUserLevel", "userId = " + user.getId());
+        user.setLevel(String.valueOf(Integer.parseInt(user.getLevel()) + 1));
+        Map<String, Object> updateUser = new HashMap<>();
+        updateUser.put("level", user.getLevel());
+        if (onSuccessListener != null && onFailureListener != null) {
+            db.collection(Keys.USERS).document(user.getId()).update(updateUser)
+                    .addOnSuccessListener(onSuccessListener)
+                    .addOnFailureListener(onFailureListener);
+        }
+    }
+
 
     //유저 프로파일 업데이트
     public void updateUserProfile(CompositeDisposable compositeDisposable, final String userId, String profileUrl, final OnUploadFinishListener onUploadFinishListener) {
@@ -287,5 +299,6 @@ public class ServerDataController {
             }
         });
     }
+
 
 }
