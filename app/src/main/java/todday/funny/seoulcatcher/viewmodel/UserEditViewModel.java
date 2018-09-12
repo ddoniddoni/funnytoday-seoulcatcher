@@ -17,6 +17,8 @@ import java.util.ArrayList;
 import todday.funny.seoulcatcher.R;
 import todday.funny.seoulcatcher.interactor.OnUploadFinishListener;
 import todday.funny.seoulcatcher.model.User;
+import todday.funny.seoulcatcher.ui.dialog.EmailPhoneEditDialog;
+import todday.funny.seoulcatcher.ui.dialog.UserEditDialog;
 import todday.funny.seoulcatcher.util.Keys;
 import todday.funny.seoulcatcher.util.PermissionCheck;
 import todday.funny.seoulcatcher.util.SendBroadcast;
@@ -24,7 +26,6 @@ import todday.funny.seoulcatcher.util.ShowIntent;
 import todday.funny.seoulcatcher.util.ToastMake;
 
 public class UserEditViewModel extends UserViewModel {
-    public ObservableField<User> mUser = new ObservableField<>();
 
     public int EDIT_USER_NAME = 0;
     public int EDIT_USER_NICK_NAME = 1;
@@ -39,7 +40,6 @@ public class UserEditViewModel extends UserViewModel {
 
     public UserEditViewModel(Context context, User user) {
         super(context, user);
-        mUser.set(user);
     }
 
     public void onTextChanged(final CharSequence text, final int type) {
@@ -73,6 +73,16 @@ public class UserEditViewModel extends UserViewModel {
                 ToastMake.make(mContext, R.string.error_permission);
             }
         });
+    }
+
+    public void openUserEmail(User user) {
+       /* EmailPhoneEditDialog dialog = EmailPhoneEditDialog.newInstance(user, mContext.getString(R.string.email));
+        addFragmentDialog(dialog, android.R.transition.slide_bottom);*/
+    }
+
+    public void openUserPhone(User user) {
+       /* EmailPhoneEditDialog dialog = EmailPhoneEditDialog.newInstance(user, mContext.getString(R.string.phone));
+        addFragmentDialog(dialog, android.R.transition.slide_bottom);*/
     }
 
 

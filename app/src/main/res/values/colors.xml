@@ -8,7 +8,7 @@
     <color name="colorAccentLight">#70EFDE</color>
     <color name="colorAccentLightTwo">#C8FFF4</color>
     <color name="colorAccentDark">#018786</color>
-
+    <color name="error">#ee1470</color>
 
     <color name="transparent">#00000000</color>
 

@@ -22,7 +22,7 @@ public class Keys {
 
     public static final String EMPTY = "empty";
 
-    public static final String AUTO_LOGIN = "autoLogin";
+    public static final String TITLE = "title";
 
     public static final String PATH = "path";
     public static final String TRANS_NAME = "transName";
