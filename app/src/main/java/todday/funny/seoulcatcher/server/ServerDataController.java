@@ -284,6 +284,8 @@ public class ServerDataController {
      * 멤버쉽 가져오기
      */
     public void getMemberShips(String level, final OnLoadMemberShipsListener onLoadMemberShipsListener) {
+        int levelInt = Integer.parseInt(level);
+        level = levelInt > 5 ? "5" : level;
         db.collection(Keys.MEMBER_SHIPS).document(level).collection(Keys.ITEMS).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
             @Override
             public void onComplete(@NonNull Task<QuerySnapshot> task) {
