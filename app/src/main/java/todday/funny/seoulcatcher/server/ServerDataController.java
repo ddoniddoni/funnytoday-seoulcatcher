@@ -110,6 +110,7 @@ public class ServerDataController {
      */
     public void initUser(final User user, OnSuccessListener<Void> onSuccessListener, OnFailureListener onFailureListener) {
         if (onSuccessListener != null && onFailureListener != null) {
+
             db.collection(Keys.USERS).document(user.getId()).set(user)
                     .addOnSuccessListener(onSuccessListener)
                     .addOnFailureListener(onFailureListener);
@@ -233,9 +234,43 @@ public class ServerDataController {
     }
 
     /**
+     * 멤버쉽
+     */
+    /**
+     * 세팅 멤버쉽
+     */
+    public void setMemberShipsData() {
+        ArrayList<MemberShip> memberShips = new ArrayList<>();
+        //name color discountRate
+        memberShips.add(new MemberShip("PARIS BAGUETTE"
+                , "https://firebasestorage.googleapis.com/v0/b/funnytoday-seoulcatcher.appspot.com/o/memberShips%2FlogoB_mod_renew.png?alt=media&token=ddd71f4f-59b2-48fc-8eec-df75c40e0222",
+                "#14408B", 10));
+        memberShips.add(new MemberShip("MEGABOX"
+                , "https://firebasestorage.googleapis.com/v0/b/funnytoday-seoulcatcher.appspot.com/o/memberShips%2Flogo_megabox.png?alt=media&token=444afc4f-337f-4605-95d1-29ca74c0c8f8",
+                "#361F66", 10));
+        memberShips.add(new MemberShip("CGV"
+                , "https://firebasestorage.googleapis.com/v0/b/funnytoday-seoulcatcher.appspot.com/o/memberShips%2Flogo_cvg.png?alt=media&token=21d630c9-99e2-4009-a5e7-2d98f383665d",
+                "#E71A0F", 10));
+        memberShips.add(new MemberShip("OLIVE_YOUNG"
+                , "https://firebasestorage.googleapis.com/v0/b/funnytoday-seoulcatcher.appspot.com/o/memberShips%2Flogo_olive_young.png?alt=media&token=0e70a663-be5d-4853-8bf9-206ac3f9760c",
+                "#000000", 10));
+        memberShips.add(new MemberShip("INNISFREE"
+                , "https://firebasestorage.googleapis.com/v0/b/funnytoday-seoulcatcher.appspot.com/o/memberShips%2Flogo_innisfree.png?alt=media&token=350121d0-5df1-4d1e-98bb-caeb2995662d",
+                "#015D23", 10));
+        memberShips.add(new MemberShip("BASKIN ROBBINS"
+                , "https://firebasestorage.googleapis.com/v0/b/funnytoday-seoulcatcher.appspot.com/o/memberShips%2Flogo_baskinrobbins.png?alt=media&token=52192869-2494-4fd9-9e5d-f0c1f411ee3d",
+                "#7D7364", 10));
+        memberShips.add(new MemberShip("LOTTE CINEMA"
+                , "https://firebasestorage.googleapis.com/v0/b/funnytoday-seoulcatcher.appspot.com/o/memberShips%2Flogo_lotte_cinema.gif?alt=media&token=243e1597-36d3-4244-a650-44108532dbe9",
+                "#C5C5C5", 10));
+        for (MemberShip memberShip : memberShips) {
+            db.collection(Keys.MEMBER_SHIPS).document("5").collection(Keys.ITEMS).add(memberShip);
+        }
+    }
+
+    /**
      * 멤버쉽 가져오기
      */
-
     public void getMemberShips(String level, final OnLoadMemberShipsListener onLoadMemberShipsListener) {
         db.collection(Keys.MEMBER_SHIPS).document(level).collection(Keys.ITEMS).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
             @Override

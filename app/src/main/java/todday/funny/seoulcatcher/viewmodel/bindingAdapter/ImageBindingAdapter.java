@@ -14,7 +14,15 @@ public class ImageBindingAdapter {
         final int width = view.getMeasuredWidth();
         final int height = view.getMeasuredHeight();
         if (path != null) {
-            GlideApp.with(context).load(path).override(width, height).centerCrop().thumbnail(0.1f).into(view);
+            GlideApp.with(context).load(path).override(width, height).centerCrop().into(view);
+        }
+    }
+
+    @BindingAdapter({"setLogoImage"})
+    public static void setLogoImage(final ImageView view, final String path) {
+        final Context context = view.getContext();
+        if (path != null) {
+            GlideApp.with(context).load(path).fitCenter().into(view);
         }
     }
 

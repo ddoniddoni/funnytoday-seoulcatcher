@@ -9,6 +9,19 @@ public class MemberShip implements Parcelable {
     private String color;
     private int discountRate;
 
+    public MemberShip(String name, String color, int discountRate) {
+        this.name = name;
+        this.color = color;
+        this.discountRate = discountRate;
+    }
+
+    public MemberShip(String name, String logoUrl, String color, int discountRate) {
+        this.name = name;
+        this.logoUrl = logoUrl;
+        this.color = color;
+        this.discountRate = discountRate;
+    }
+
     public String getName() {
         return name;
     }

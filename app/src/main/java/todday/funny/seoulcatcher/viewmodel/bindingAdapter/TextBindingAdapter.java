@@ -2,6 +2,7 @@ package todday.funny.seoulcatcher.viewmodel.bindingAdapter;
 
 import android.content.Context;
 import android.databinding.BindingAdapter;
+import android.graphics.Color;
 import android.text.Spannable;
 import android.text.SpannableString;
 import android.text.style.AbsoluteSizeSpan;
@@ -11,6 +12,11 @@ import todday.funny.seoulcatcher.R;
 import todday.funny.seoulcatcher.util.DateFormat;
 
 public class TextBindingAdapter {
+    @BindingAdapter({"setTextColor"})
+    public static void setTextColor(TextView view, String color) {
+        view.setTextColor(Color.parseColor(color));
+    }
+
     @BindingAdapter({"setLevelText"})
     public static void setLevelText(TextView view, String level) {
         Context context = view.getContext();

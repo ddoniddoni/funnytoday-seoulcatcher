@@ -13,39 +13,48 @@
             type="todday.funny.seoulcatcher.viewmodel.MembershipViewModel" />
     </data>
 
-    <LinearLayout
-        setBackgroundColor="@{model.mMemberShip.color}"
+    <android.support.constraint.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:clickable="true"
-        android:gravity="center_vertical"
-        android:orientation="horizontal"
-        android:paddingBottom="24dp"
-        android:paddingLeft="16dp"
-        android:paddingRight="16dp"
-        android:paddingTop="24dp"
-        tools:background="@color/colorPrimary">
+        android:layout_height="wrap_content">
 
-        <TextView
-            android:layout_width="0dp"
+        <android.support.constraint.ConstraintLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="@{model.mMemberShip.name}"
-            android:textColor="@color/white"
-            android:textSize="14dp"
-            android:textStyle="bold"
-            tools:text="TEST" />
+            android:padding="24dp">
 
-        <TextView
-            setDiscountText="@{model.mMemberShip.discountRate}"
-            setTypeText="@{@string/percent_type}"
-            setTypeTextSize="@{12}"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="5%"
-            android:textColor="@color/white"
-            android:textSize="18dp"
-            android:textStyle="bold" />
+            <android.support.v7.widget.AppCompatImageView
+                setLogoImage="@{model.mMemberShip.logoUrl}"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintHeight_percent="1"
+                app:layout_constraintHorizontal_bias="0"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintWidth_percent="0.4" />
 
-    </LinearLayout>
+            <TextView
+                setDiscountText="@{model.mMemberShip.discountRate}"
+                setTextColor="@{model.mMemberShip.color}"
+                setTypeText="@{@string/percent_type}"
+                setTypeTextSize="@{12}"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="5%"
+                android:textSize="18dp"
+                android:textStyle="bold"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+        </android.support.constraint.ConstraintLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0.5dp"
+            android:background="@color/gray_light_two"
+            android:visibility="visible"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent" />
+    </android.support.constraint.ConstraintLayout>
 </layout>
