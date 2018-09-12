@@ -1,7 +1,11 @@
 package todday.funny.seoulcatcher.viewmodel;
 
+import android.content.BroadcastReceiver;
 import android.content.Context;
+import android.content.Intent;
+import android.content.IntentFilter;
 import android.databinding.ObservableField;
+import android.databinding.ObservableInt;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v4.app.Fragment;
@@ -13,16 +17,19 @@ import android.view.MenuItem;
 import java.util.ArrayList;
 
 import todday.funny.seoulcatcher.R;
+import todday.funny.seoulcatcher.model.User;
 import todday.funny.seoulcatcher.ui.activity.MainActivity;
 import todday.funny.seoulcatcher.ui.fragment.EducationFragment;
 import todday.funny.seoulcatcher.ui.fragment.HistoryFragment;
 import todday.funny.seoulcatcher.ui.fragment.ProfileFragment;
 import todday.funny.seoulcatcher.ui.fragment.ScheduleFragment;
 import todday.funny.seoulcatcher.ui.fragment.SettingFragment;
+import todday.funny.seoulcatcher.util.Keys;
 
 public class MainViewModel extends BaseViewModel {
     private ArrayList<Fragment> mainFragmentList = new ArrayList<>();
     private ObservableField<String> mCurrentTag = new ObservableField<>();
+    public ObservableInt mSelectId = new ObservableInt(R.id.navigation_profile);
 
     public BottomNavigationView.OnNavigationItemSelectedListener mNavigationItemSelectedListener;
 
@@ -106,5 +113,31 @@ public class MainViewModel extends BaseViewModel {
             return false;
         }
     };
+
+    //브로드캐스트
+    private BroadcastReceiver broadcastReceiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            String action = intent.getAction();
+            if (action != null) {
+                if (action.equals(Keys.APPLY_EDUCATION)) {
+                    moveFragment(ScheduleFragment.class.getSimpleName());
+                    mSelectId.set(R.id.navigation_educationSchedule);
+                    mSelectId.notifyChange();
+                }
+            }
+        }
+    };
+
+    public BroadcastReceiver getBroadcastReceiver() {
+        return broadcastReceiver;
+    }
+
+    public IntentFilter getIntentFilter() {
+        IntentFilter intentFilter = new IntentFilter();
+        intentFilter.addAction(Keys.APPLY_EDUCATION);
+        return intentFilter;
+    }
+
 
 }

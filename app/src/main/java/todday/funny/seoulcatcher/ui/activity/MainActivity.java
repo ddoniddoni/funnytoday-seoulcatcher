@@ -44,6 +44,15 @@ public class MainActivity extends BaseActivity {
         model.setNavigationItemSelectedListener();
         binding.setModel(model);
         model.initFragmentList(R.id.container);
+        registerReceiver(model.getBroadcastReceiver(), model.getIntentFilter());
+    }
+
+    @Override
+    protected void onDestroy() {
+        if (model != null && model.getBroadcastReceiver() != null) {
+            unregisterReceiver(model.getBroadcastReceiver());
+        }
+        super.onDestroy();
     }
 
     @Override

@@ -21,6 +21,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center"
+            android:onClick="@{()->model.moveEducationFragment()}"
             android:padding="32dp"
             android:text="@{model.mEmptyText}"
             android:textColor="@color/gray_dark"

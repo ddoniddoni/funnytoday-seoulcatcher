@@ -17,4 +17,9 @@ public class SendBroadcast {
         send.putExtra(Keys.USER, user);
         context.sendBroadcast(send);
     }
+
+    public static void move(Context context, String action) {
+        Intent send = new Intent(action);
+        context.sendBroadcast(send);
+    }
 }
