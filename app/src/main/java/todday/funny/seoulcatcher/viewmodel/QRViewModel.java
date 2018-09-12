@@ -2,11 +2,8 @@ package todday.funny.seoulcatcher.viewmodel;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
-import android.content.pm.PackageManager;
 import android.databinding.ObservableField;
 import android.support.annotation.NonNull;
-import android.support.v4.app.ActivityCompat;
-import android.util.Log;
 import android.util.SparseArray;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
@@ -21,7 +18,6 @@ import com.google.android.gms.vision.barcode.BarcodeDetector;
 import java.io.IOException;
 
 import todday.funny.seoulcatcher.R;
-import todday.funny.seoulcatcher.interactor.OnQRSuccessListener;
 import todday.funny.seoulcatcher.model.User;
 import todday.funny.seoulcatcher.util.Keys;
 import todday.funny.seoulcatcher.util.SendBroadcast;

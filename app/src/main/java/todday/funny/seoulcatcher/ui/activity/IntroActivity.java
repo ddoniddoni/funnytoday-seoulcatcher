@@ -1,17 +1,16 @@
 package todday.funny.seoulcatcher.ui.activity;
 
-import android.animation.ValueAnimator;
 import android.content.Intent;
 import android.databinding.DataBindingUtil;
+import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 
 import com.firebase.ui.auth.AuthUI;
 import com.firebase.ui.auth.IdpResponse;
+import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
@@ -27,12 +26,9 @@ import io.reactivex.schedulers.Schedulers;
 import todday.funny.seoulcatcher.BaseActivity;
 import todday.funny.seoulcatcher.R;
 import todday.funny.seoulcatcher.databinding.IntroBinding;
-import todday.funny.seoulcatcher.databinding.MainBinding;
 import todday.funny.seoulcatcher.interactor.OnInitUserDataListener;
 import todday.funny.seoulcatcher.model.User;
 import todday.funny.seoulcatcher.server.ServerDataController;
-import todday.funny.seoulcatcher.util.Keys;
-import todday.funny.seoulcatcher.util.SharedPrefsUtils;
 import todday.funny.seoulcatcher.util.StartActivity;
 import todday.funny.seoulcatcher.util.ToastMake;
 
@@ -116,6 +112,16 @@ public class IntroActivity extends BaseActivity {
             @Override
             public void accept(User user) throws Exception {
                 StartActivity.startSingle(IntroActivity.this, new Intent(IntroActivity.this, MainActivity.class), true);
+            }
+        }, new Consumer<Throwable>() {
+            @Override
+            public void accept(Throwable throwable) throws Exception {
+                mServerDataController.logout(new OnCompleteListener<Void>() {
+                    @Override
+                    public void onComplete(@NonNull Task<Void> task) {
+                        recreate();
+                    }
+                });
             }
         }));
     }

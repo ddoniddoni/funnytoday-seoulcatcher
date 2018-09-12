@@ -34,7 +34,6 @@ import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.functions.Consumer;
 import io.reactivex.schedulers.Schedulers;
-import todday.funny.seoulcatcher.R;
 import todday.funny.seoulcatcher.interactor.OnInitUserDataListener;
 import todday.funny.seoulcatcher.interactor.OnLoadMemberShipsListener;
 import todday.funny.seoulcatcher.interactor.OnLoadScheduleListListener;
@@ -45,7 +44,6 @@ import todday.funny.seoulcatcher.model.Schedule;
 import todday.funny.seoulcatcher.model.User;
 import todday.funny.seoulcatcher.util.ImageConverter;
 import todday.funny.seoulcatcher.util.Keys;
-import todday.funny.seoulcatcher.util.ToastMake;
 
 public class ServerDataController {
     private String TAG = ServerDataController.class.getSimpleName();
@@ -115,7 +113,19 @@ public class ServerDataController {
             db.collection(Keys.USERS).document(user.getId()).get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
                 @Override
                 public void onSuccess(DocumentSnapshot documentSnapshot) {
-                    onInitUserDataListener.onComplete();
+                    User newUser = documentSnapshot.toObject(User.class);
+                    if (newUser != null) {
+                        onInitUserDataListener.onComplete();
+                    } else {
+                        db.collection(Keys.USERS).document(user.getId()).set(user)
+                                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                    @Override
+                                    public void onSuccess(Void aVoid) {
+                                        onInitUserDataListener.onComplete();
+                                    }
+                                })
+                                .addOnFailureListener(onFailureListener);
+                    }
                 }
             }).addOnFailureListener(new OnFailureListener() {
                 @Override
@@ -142,8 +152,13 @@ public class ServerDataController {
                     getUser(getLoginUserId(), new OnLoadUserDataFinishListener() {
                         @Override
                         public void onComplete(User user) {
-                            mLoginUser = user;
-                            emitter.onSuccess(mLoginUser);
+                            if (user != null) {
+                                mLoginUser = user;
+                                emitter.onSuccess(mLoginUser);
+                            } else {
+                                emitter.onError(new Exception());
+                            }
+
                         }
                     });
                 } else {
