@@ -23,6 +23,9 @@
     <string name="days_ago">"일 지남"</string>
     <string name="days_remaining">"일 남음"</string>
 
+    <string name="member_ship_user_level">"%s님은\nLevel %s 회원 입니다."</string>
+
+
     <!--hint-->
     <string name="hint_name">"이름을 입력해주세요."</string>
     <string name="hint_message">"내용을 입력해주세요."</string>

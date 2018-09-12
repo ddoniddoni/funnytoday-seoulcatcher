@@ -31,6 +31,9 @@
     <string name="days_ago">" days ago"</string>
     <string name="days_remaining">" days remaining"</string>
 
+    <string name="member_ship_user_level">"%s is\n a member of level %s."</string>
+
+
     <!--hint-->
     <string name="hint_email">"Please enter a email."</string>
     <string name="hint_phone">"Please enter a phone."</string>

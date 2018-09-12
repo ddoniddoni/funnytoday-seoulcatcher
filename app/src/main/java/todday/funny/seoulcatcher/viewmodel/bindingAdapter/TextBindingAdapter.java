@@ -9,6 +9,7 @@ import android.text.style.AbsoluteSizeSpan;
 import android.widget.TextView;
 
 import todday.funny.seoulcatcher.R;
+import todday.funny.seoulcatcher.model.User;
 import todday.funny.seoulcatcher.util.DateFormat;
 
 public class TextBindingAdapter {
@@ -29,6 +30,16 @@ public class TextBindingAdapter {
         Context context = view.getContext();
         view.setText(DateFormat.getDdayStringFromCalendar(context, date));
     }
+
+    @BindingAdapter({"setMemberShipLevelText"})
+    public static void setMemberShipLevelText(TextView view, User user) {
+        Context context = view.getContext();
+        if (user != null) {
+            String text = context.getString(R.string.member_ship_user_level, user.getName(), user.getLevel());
+            view.setText(text);
+        }
+    }
+
 
     @BindingAdapter({"setDiscountText", "setTypeText", "setTypeTextSize"})
     public static void setDiscountText(TextView view, int disCount, String setTypeText, int typeSize) {

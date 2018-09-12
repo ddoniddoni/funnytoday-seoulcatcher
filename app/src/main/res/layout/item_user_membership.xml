@@ -30,13 +30,16 @@
                 setCircleImage="@{model.mUser.photoUrl}"
                 android:layout_width="56dp"
                 android:layout_height="56dp"
+                android:layout_marginEnd="8dp"
                 android:layout_marginRight="8dp" />
 
             <TextView
+                setMemberShipLevelText="@{model.mUser}"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="8dp"
-                android:text="윤태식님은\nLevel 0 회원 입니다." />
+                android:layout_marginStart="8dp"
+                tools:text="윤태식님은\nLevel 0 회원 입니다." />
         </LinearLayout>
     </android.support.constraint.ConstraintLayout>
 </layout>
