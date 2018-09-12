@@ -34,6 +34,7 @@ import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.functions.Consumer;
 import io.reactivex.schedulers.Schedulers;
 import todday.funny.seoulcatcher.R;
+import todday.funny.seoulcatcher.interactor.OnInitUserDataListener;
 import todday.funny.seoulcatcher.interactor.OnLoadMemberShipsListener;
 import todday.funny.seoulcatcher.interactor.OnLoadScheduleListListener;
 import todday.funny.seoulcatcher.interactor.OnLoadUserDataFinishListener;
@@ -108,12 +109,27 @@ public class ServerDataController {
     /**
      * 유저관련
      */
-    public void initUser(final User user, OnSuccessListener<Void> onSuccessListener, OnFailureListener onFailureListener) {
-        if (onSuccessListener != null && onFailureListener != null) {
+    public void initUser(final User user, final OnInitUserDataListener onInitUserDataListener, final OnFailureListener onFailureListener) {
+        if (onInitUserDataListener != null && onFailureListener != null) {
+            db.collection(Keys.USERS).document(user.getId()).get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+                @Override
+                public void onSuccess(DocumentSnapshot documentSnapshot) {
+                    onInitUserDataListener.onComplete();
+                }
+            }).addOnFailureListener(new OnFailureListener() {
+                @Override
+                public void onFailure(@NonNull Exception e) {
+                    db.collection(Keys.USERS).document(user.getId()).set(user)
+                            .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                @Override
+                                public void onSuccess(Void aVoid) {
+                                    onInitUserDataListener.onComplete();
+                                }
+                            })
+                            .addOnFailureListener(onFailureListener);
+                }
+            });
 
-            db.collection(Keys.USERS).document(user.getId()).set(user)
-                    .addOnSuccessListener(onSuccessListener)
-                    .addOnFailureListener(onFailureListener);
         }
     }
 

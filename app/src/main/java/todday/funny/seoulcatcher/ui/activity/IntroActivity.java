@@ -28,6 +28,7 @@ import todday.funny.seoulcatcher.BaseActivity;
 import todday.funny.seoulcatcher.R;
 import todday.funny.seoulcatcher.databinding.IntroBinding;
 import todday.funny.seoulcatcher.databinding.MainBinding;
+import todday.funny.seoulcatcher.interactor.OnInitUserDataListener;
 import todday.funny.seoulcatcher.model.User;
 import todday.funny.seoulcatcher.server.ServerDataController;
 import todday.funny.seoulcatcher.util.Keys;
@@ -91,9 +92,9 @@ public class IntroActivity extends BaseActivity {
                 User newUser = new User();
                 newUser.setUser(user);
                 mServerDataController.initUser(newUser,
-                        new OnSuccessListener<Void>() {
+                        new OnInitUserDataListener() {
                             @Override
-                            public void onSuccess(Void aVoid) {
+                            public void onComplete() {
                                 startMainActivity();
                             }
                         }, new OnFailureListener() {

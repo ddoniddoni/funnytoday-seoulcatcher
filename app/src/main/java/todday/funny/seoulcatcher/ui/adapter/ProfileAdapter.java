@@ -96,7 +96,6 @@ public class ProfileAdapter extends RecyclerView.Adapter {
     @Override
     public int getItemCount() {
         if (mItemList != null) {
-            Log.e("test", String.valueOf(mItemList.size()));
             return mItemList.size();
         }
         return 0;
