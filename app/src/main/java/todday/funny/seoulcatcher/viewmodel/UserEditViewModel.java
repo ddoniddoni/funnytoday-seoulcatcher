@@ -2,14 +2,17 @@ package todday.funny.seoulcatcher.viewmodel;
 
 import android.content.BroadcastReceiver;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.databinding.ObservableBoolean;
 import android.databinding.ObservableField;
 import android.support.annotation.NonNull;
 
+import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.gun0912.tedpermission.PermissionListener;
 
 import java.util.ArrayList;
@@ -17,12 +20,15 @@ import java.util.ArrayList;
 import todday.funny.seoulcatcher.R;
 import todday.funny.seoulcatcher.interactor.OnUploadFinishListener;
 import todday.funny.seoulcatcher.model.User;
+import todday.funny.seoulcatcher.ui.activity.IntroActivity;
+import todday.funny.seoulcatcher.ui.dialog.AlertDialogCreate;
 import todday.funny.seoulcatcher.ui.dialog.EmailPhoneEditDialog;
 import todday.funny.seoulcatcher.ui.dialog.UserEditDialog;
 import todday.funny.seoulcatcher.util.Keys;
 import todday.funny.seoulcatcher.util.PermissionCheck;
 import todday.funny.seoulcatcher.util.SendBroadcast;
 import todday.funny.seoulcatcher.util.ShowIntent;
+import todday.funny.seoulcatcher.util.StartActivity;
 import todday.funny.seoulcatcher.util.ToastMake;
 
 public class UserEditViewModel extends UserViewModel {
@@ -83,6 +89,21 @@ public class UserEditViewModel extends UserViewModel {
     public void openUserPhone(User user) {
        /* EmailPhoneEditDialog dialog = EmailPhoneEditDialog.newInstance(user, mContext.getString(R.string.phone));
         addFragmentDialog(dialog, android.R.transition.slide_bottom);*/
+    }
+
+    public void logout() {
+        mAlertDialogCreate.logout(new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                mServerDataController.logout(new OnCompleteListener<Void>() {
+                    @Override
+                    public void onComplete(@NonNull Task<Void> task) {
+                        StartActivity.startSingle(mContext, new Intent(mContext, IntroActivity.class), true);
+                    }
+                });
+            }
+        });
+
     }
 
 

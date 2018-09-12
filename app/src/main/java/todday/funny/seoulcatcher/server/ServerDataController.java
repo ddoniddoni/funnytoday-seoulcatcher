@@ -6,6 +6,7 @@ import android.net.Uri;
 import android.support.annotation.NonNull;
 import android.util.Log;
 
+import com.firebase.ui.auth.AuthUI;
 import com.google.android.gms.tasks.Continuation;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
@@ -238,6 +239,12 @@ public class ServerDataController {
                 });
             }
         }));
+    }
+
+    public void logout(OnCompleteListener<Void> completeListener) {
+        AuthUI.getInstance()
+                .signOut(mContext)
+                .addOnCompleteListener(completeListener);
     }
 
     /**

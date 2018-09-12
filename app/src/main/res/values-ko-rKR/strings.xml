@@ -14,7 +14,9 @@
     <string name="phone">"전화번호"</string>
     <string name="start">"시작"</string>
     <string name="certified">"인증"</string>
+    <string name="account">"계정"</string>
 
+    <string name="log_out">"로그아웃"</string>
     <string name="member_ship">"멤버쉽"</string>
     <string name="nick_name">"닉네임"</string>
     <string name="personal_information">"개인정보"</string>
@@ -40,6 +42,7 @@
     <!--guide-->
     <string name="msg_quit">""뒤로" 버튼을 한번 더 누르시면 종료됩니다."</string>
     <string name="msg_attendance">"성공적으로 출석했습니다. "</string>
+    <string name="msg_logout">"정말 로그아웃 하시겠습니까?"</string>
 
     <!--empty-->
     <string name="empty_title">"시작하기"</string>

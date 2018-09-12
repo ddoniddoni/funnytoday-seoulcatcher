@@ -17,275 +17,307 @@
 
     <android.support.constraint.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="@color/white"
-        android:clickable="true"
-        android:onClick="@{()->model.hideKeyBoard()}">
+        android:layout_height="match_parent">
 
         <LinearLayout
-            android:id="@+id/layout_header"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:elevation="4dp"
-            android:orientation="horizontal"
-            app:layout_constraintBottom_toTopOf="@+id/layout_main"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
+            android:layout_height="match_parent"
+            android:background="@color/white"
+            android:clickable="true"
+            android:onClick="@{()->model.hideKeyBoard()}"
+            android:orientation="vertical">
 
-            <android.support.v7.widget.AppCompatImageView
-                android:id="@+id/btn_close"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:background="?android:selectableItemBackground"
-                android:onClick="@{() -> model.close()}"
-                android:padding="16dp"
-                app:srcCompat="@drawable/ic_keyboard_backspace_black_24dp" />
-
-            <TextView
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical"
-                android:layout_weight="1"
-                android:gravity="center_vertical"
-                android:text="@string/modify"
-                android:textSize="18sp"
-                android:textStyle="bold" />
-
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical"
-                android:foreground="?android:selectableItemBackground"
-                android:onClick="@{()->model.editUser()}"
-                android:padding="16dp"
-                android:text="@string/ok"
-                android:textStyle="bold" />
-        </LinearLayout>
-
-        <android.support.constraint.ConstraintLayout
-            android:id="@+id/layout_main"
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/layout_header">
-
-            <android.support.constraint.ConstraintLayout
-                android:id="@+id/layout_image"
+            <LinearLayout
+                android:id="@+id/layout_header"
                 android:layout_width="match_parent"
-                android:layout_height="0dp"
-                app:layout_constraintBottom_toTopOf="@+id/layout_content"
-                app:layout_constraintDimensionRatio="1:0.3"
+                android:layout_height="wrap_content"
+                android:elevation="4dp"
+                android:orientation="horizontal"
+                app:layout_constraintBottom_toTopOf="@+id/layout_main"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
                 app:layout_constraintTop_toTopOf="parent">
 
                 <android.support.v7.widget.AppCompatImageView
-                    android:id="@+id/image_user_background"
-                    setImage="@{model.mUser.backgroundUrl}"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:foreground="@color/black_transparent"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintLeft_toLeftOf="parent"
-                    app:layout_constraintRight_toRightOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
-
-                <android.support.v7.widget.AppCompatImageView
+                    android:id="@+id/btn_close"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:onClick="@{()->model.editImage(RequestCode.EDIT_USER_BACKGROUND_SELECT)}"
+                    android:background="?android:selectableItemBackground"
+                    android:onClick="@{() -> model.close()}"
                     android:padding="16dp"
-                    android:tint="@color/white"
-                    app:layout_constraintRight_toRightOf="parent"
-                    app:srcCompat="@drawable/ic_photo_camera_black_24dp" />
+                    app:srcCompat="@drawable/ic_keyboard_backspace_black_24dp" />
 
-                <android.support.v7.widget.AppCompatImageView
-                    android:id="@+id/image_user_profile"
-                    setCircleImage="@{model.mUser.photoUrl}"
-                    android:layout_width="56dp"
-                    android:layout_height="56dp"
-                    android:foreground="@drawable/background_circle_transparent"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintLeft_toLeftOf="parent"
-                    app:layout_constraintRight_toRightOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_weight="1"
+                    android:gravity="center_vertical"
+                    android:text="@string/modify"
+                    android:textSize="18sp"
+                    android:textStyle="bold" />
 
-                <android.support.v7.widget.AppCompatImageView
+
+                <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:onClick="@{()->model.editImage(RequestCode.EDIT_USER_PROFILE_SELECT)}"
+                    android:layout_gravity="center_vertical"
+                    android:foreground="?android:selectableItemBackground"
+                    android:onClick="@{()->model.editUser()}"
                     android:padding="16dp"
-                    android:tint="@color/white"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintLeft_toLeftOf="parent"
-                    app:layout_constraintRight_toRightOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:srcCompat="@drawable/ic_photo_camera_black_24dp" />
-            </android.support.constraint.ConstraintLayout>
+                    android:text="@string/ok"
+                    android:textStyle="bold" />
+            </LinearLayout>
 
-            <LinearLayout
-                android:id="@+id/layout_content"
+            <ScrollView
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
+                android:layout_height="match_parent"
+                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/layout_image">
+                app:layout_constraintTop_toBottomOf="@+id/layout_header">
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginBottom="8dp"
-                    android:layout_marginLeft="16dp"
-                    android:layout_marginRight="16dp"
-                    android:layout_marginTop="16dp"
-                    android:text="@string/basics"
-                    android:textColor="@color/gray_dark"
-                    android:textSize="12sp" />
-
-                <!--이름-->
-                <LinearLayout
+                <android.support.constraint.ConstraintLayout
+                    android:id="@+id/layout_main"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:gravity="center">
+                    android:layout_height="match_parent">
 
-                    <TextView
-                        android:layout_width="wrap_content"
+                    <android.support.constraint.ConstraintLayout
+                        android:id="@+id/layout_image"
+                        android:layout_width="match_parent"
+                        android:layout_height="0dp"
+                        app:layout_constraintBottom_toTopOf="@+id/layout_content"
+                        app:layout_constraintDimensionRatio="1:0.3"
+                        app:layout_constraintLeft_toLeftOf="parent"
+                        app:layout_constraintRight_toRightOf="parent"
+                        app:layout_constraintTop_toTopOf="parent">
+
+                        <android.support.v7.widget.AppCompatImageView
+                            android:id="@+id/image_user_background"
+                            setImage="@{model.mUser.backgroundUrl}"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:foreground="@color/black_transparent"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintLeft_toLeftOf="parent"
+                            app:layout_constraintRight_toRightOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
+
+                        <android.support.v7.widget.AppCompatImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:onClick="@{()->model.editImage(RequestCode.EDIT_USER_BACKGROUND_SELECT)}"
+                            android:padding="16dp"
+                            android:tint="@color/white"
+                            app:layout_constraintRight_toRightOf="parent"
+                            app:srcCompat="@drawable/ic_photo_camera_black_24dp" />
+
+                        <android.support.v7.widget.AppCompatImageView
+                            android:id="@+id/image_user_profile"
+                            setCircleImage="@{model.mUser.photoUrl}"
+                            android:layout_width="56dp"
+                            android:layout_height="56dp"
+                            android:foreground="@drawable/background_circle_transparent"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintLeft_toLeftOf="parent"
+                            app:layout_constraintRight_toRightOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
+
+                        <android.support.v7.widget.AppCompatImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:onClick="@{()->model.editImage(RequestCode.EDIT_USER_PROFILE_SELECT)}"
+                            android:padding="16dp"
+                            android:tint="@color/white"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintLeft_toLeftOf="parent"
+                            app:layout_constraintRight_toRightOf="parent"
+                            app:layout_constraintTop_toTopOf="parent"
+                            app:srcCompat="@drawable/ic_photo_camera_black_24dp" />
+                    </android.support.constraint.ConstraintLayout>
+
+                    <LinearLayout
+                        android:id="@+id/layout_content"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:padding="16dp"
-                        android:text="@string/name"
-                        android:textSize="14sp"
-                        android:textStyle="bold" />
+                        android:orientation="vertical"
+                        app:layout_constraintLeft_toLeftOf="parent"
+                        app:layout_constraintRight_toRightOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/layout_image">
 
-                    <android.support.v7.widget.AppCompatEditText
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:background="@null"
-                        android:gravity="end"
-                        android:hint="@string/hint_name"
-                        android:imeOptions="actionDone"
-                        android:inputType="text"
-                        android:onTextChanged="@{(text, start, before, count) -> model.onTextChanged(text,model.EDIT_USER_NAME)}"
-                        android:padding="16dp"
-                        android:singleLine="true"
-                        android:text="@{model.mUser.name}"
-                        android:textColorHint="@color/gray_dark"
-                        android:textSize="14sp" />
-                </LinearLayout>
-                <!--메세지-->
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:gravity="center">
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginBottom="8dp"
+                            android:layout_marginLeft="16dp"
+                            android:layout_marginRight="16dp"
+                            android:layout_marginTop="16dp"
+                            android:text="@string/basics"
+                            android:textColor="@color/gray_dark"
+                            android:textSize="12sp" />
 
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:padding="16dp"
-                        android:text="@string/nick_name"
-                        android:textSize="14sp"
-                        android:textStyle="bold" />
+                        <!--이름-->
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:gravity="center">
 
-                    <android.support.v7.widget.AppCompatEditText
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:background="@null"
-                        android:gravity="end"
-                        android:hint="@string/hint_content"
-                        android:imeOptions="actionDone"
-                        android:inputType="text"
-                        android:onTextChanged="@{(text, start, before, count) -> model.onTextChanged(text,model.EDIT_USER_NICK_NAME)}"
-                        android:padding="16dp"
-                        android:singleLine="true"
-                        android:text="@{model.mUser.nickName}"
-                        android:textColorHint="@color/gray_dark"
-                        android:textSize="14sp" />
-                </LinearLayout>
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:padding="16dp"
+                                android:text="@string/name"
+                                android:textSize="14sp"
+                                android:textStyle="bold" />
 
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="1dp"
-                    android:background="@color/gray_light" />
+                            <android.support.v7.widget.AppCompatEditText
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:background="@null"
+                                android:gravity="end"
+                                android:hint="@string/hint_name"
+                                android:imeOptions="actionDone"
+                                android:inputType="text"
+                                android:onTextChanged="@{(text, start, before, count) -> model.onTextChanged(text,model.EDIT_USER_NAME)}"
+                                android:padding="16dp"
+                                android:singleLine="true"
+                                android:text="@{model.mUser.name}"
+                                android:textColorHint="@color/gray_dark"
+                                android:textSize="14sp" />
+                        </LinearLayout>
+                        <!--메세지-->
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:gravity="center">
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginBottom="8dp"
-                    android:layout_marginLeft="16dp"
-                    android:layout_marginRight="16dp"
-                    android:layout_marginTop="16dp"
-                    android:text="@string/personal_information"
-                    android:textColor="@color/gray_dark"
-                    android:textSize="12sp" />
-                <!--이메일-->
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:gravity="center"
-                    android:onClick="@{()->model.openUserEmail(model.mUser)}">
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:padding="16dp"
+                                android:text="@string/nick_name"
+                                android:textSize="14sp"
+                                android:textStyle="bold" />
 
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:padding="16dp"
-                        android:text="@string/email"
-                        android:textSize="14sp"
-                        android:textStyle="bold" />
+                            <android.support.v7.widget.AppCompatEditText
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:background="@null"
+                                android:gravity="end"
+                                android:hint="@string/hint_content"
+                                android:imeOptions="actionDone"
+                                android:inputType="text"
+                                android:onTextChanged="@{(text, start, before, count) -> model.onTextChanged(text,model.EDIT_USER_NICK_NAME)}"
+                                android:padding="16dp"
+                                android:singleLine="true"
+                                android:text="@{model.mUser.nickName}"
+                                android:textColorHint="@color/gray_dark"
+                                android:textSize="14sp" />
+                        </LinearLayout>
 
-                    <android.support.v7.widget.AppCompatTextView
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:gravity="end"
-                        android:hint="@string/email"
-                        android:onTextChanged="@{(text, start, before, count) -> model.onTextChanged(text,model.EDIT_USER_EMAIL)}"
-                        android:padding="16dp"
-                        android:singleLine="true"
-                        android:text="@{model.mUser.email}"
-                        android:textColorHint="@color/gray_dark"
-                        android:textSize="14sp" />
-                </LinearLayout>
-                <!--전화번호-->
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:gravity="center"
-                    android:onClick="@{()->model.openUserPhone(model.mUser)}">
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="1dp"
+                            android:background="@color/gray_light" />
 
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:padding="16dp"
-                        android:text="@string/phone"
-                        android:textSize="14sp"
-                        android:textStyle="bold" />
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginBottom="8dp"
+                            android:layout_marginLeft="16dp"
+                            android:layout_marginRight="16dp"
+                            android:layout_marginTop="16dp"
+                            android:text="@string/personal_information"
+                            android:textColor="@color/gray_dark"
+                            android:textSize="12sp" />
+                        <!--이메일-->
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:gravity="center"
+                            android:onClick="@{()->model.openUserEmail(model.mUser)}">
 
-                    <android.support.v7.widget.AppCompatTextView
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:gravity="end"
-                        android:hint="@string/phone"
-                        android:onTextChanged="@{(text, start, before, count) -> model.onTextChanged(text,model.EDIT_USER_PHONE)}"
-                        android:padding="16dp"
-                        android:singleLine="true"
-                        android:text="@{model.mUser.phoneNumber}"
-                        android:textColorHint="@color/gray_dark"
-                        android:textSize="14sp" />
-                </LinearLayout>
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:padding="16dp"
+                                android:text="@string/email"
+                                android:textSize="14sp"
+                                android:textStyle="bold" />
 
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="1dp"
-                    android:background="@color/gray_light" />
-            </LinearLayout>
-        </android.support.constraint.ConstraintLayout>
+                            <android.support.v7.widget.AppCompatTextView
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:gravity="end"
+                                android:hint="@string/email"
+                                android:onTextChanged="@{(text, start, before, count) -> model.onTextChanged(text,model.EDIT_USER_EMAIL)}"
+                                android:padding="16dp"
+                                android:singleLine="true"
+                                android:text="@{model.mUser.email}"
+                                android:textColorHint="@color/gray_dark"
+                                android:textSize="14sp" />
+                        </LinearLayout>
+                        <!--전화번호-->
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:gravity="center"
+                            android:onClick="@{()->model.openUserPhone(model.mUser)}">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:padding="16dp"
+                                android:text="@string/phone"
+                                android:textSize="14sp"
+                                android:textStyle="bold" />
+
+                            <android.support.v7.widget.AppCompatTextView
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:gravity="end"
+                                android:hint="@string/phone"
+                                android:onTextChanged="@{(text, start, before, count) -> model.onTextChanged(text,model.EDIT_USER_PHONE)}"
+                                android:padding="16dp"
+                                android:singleLine="true"
+                                android:text="@{model.mUser.phoneNumber}"
+                                android:textColorHint="@color/gray_dark"
+                                android:textSize="14sp" />
+                        </LinearLayout>
+
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="1dp"
+                            android:background="@color/gray_light" />
+
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginBottom="8dp"
+                            android:layout_marginLeft="16dp"
+                            android:layout_marginRight="16dp"
+                            android:layout_marginTop="16dp"
+                            android:text="@string/account"
+                            android:textColor="@color/gray_dark"
+                            android:textSize="12sp" />
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:onClick="@{()->model.logout()}"
+                            android:padding="16dp"
+                            android:text="@string/log_out"
+                            android:textSize="14sp"
+                            android:textStyle="bold" />
+                    </LinearLayout>
+                </android.support.constraint.ConstraintLayout>
+            </ScrollView>
+        </LinearLayout>
 
         <android.support.constraint.ConstraintLayout
             android:layout_width="match_parent"

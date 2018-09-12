@@ -64,6 +64,12 @@ public class BaseViewModel extends BaseObservable {
         hideKeyBoard();
     }
 
+    public void finish() {
+        if (mContext instanceof Activity) {
+            ((Activity) mContext).finish();
+        }
+    }
+
     public void openImageViewer(String path) {
         ImageViewerDialog dialog = ImageViewerDialog.newInstance(path);
         startFragmentDialog(dialog, android.R.transition.slide_top);

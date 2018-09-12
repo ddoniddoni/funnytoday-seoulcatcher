@@ -93,7 +93,7 @@ public class ScheduleFragment extends Fragment {
         recyclerView = view.findViewById(R.id.scheduleFragment_recyclerView);
         textView = view.findViewById(R.id.scheduleFragment_textView);
 
-        adapter = new ScheduleAdapter(getContext(), schedules,scheduleModelsKey);
+        adapter = new ScheduleAdapter(getContext(), schedules, scheduleModelsKey);
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(inflater.getContext()));
 
@@ -124,35 +124,37 @@ public class ScheduleFragment extends Fragment {
         FirebaseFirestore.getInstance().collection(Keys.USERS).document(model.userUid).collection(Keys.SCHEDULES).addSnapshotListener(new EventListener<QuerySnapshot>() {
             @Override
             public void onEvent(@Nullable QuerySnapshot queryDocumentSnapshots, @Nullable FirebaseFirestoreException e) {
-                if(queryDocumentSnapshots.getDocuments() == null){
-                    Log.e("recyclerView","없다!");
-                }else {
-                    textView.setVisibility(View.INVISIBLE);
-                    List<DocumentChange> query =queryDocumentSnapshots.getDocumentChanges();
-                    for (int i = 0; i < query.size(); i++) {
-                        Schedule schedule = (query.get(i).getDocument()).toObject(Schedule.class);
-                        switch (query.get(i).getType()){
-                            case ADDED:
-                                schedules.add(schedule);
-                                scheduleModelsKey.add(query.get(i).getDocument().getId());
-                                Log.e("key",query.get(i).getDocument().getId());
-                                break;
-                            case REMOVED:
-                                Log.e("aaaaa","aaaaaaaaa");
-                                deleteItem(query.get(i).getDocument().getId());
-                                adapter.notifyItemRemoved(i);
-                                break;
+                if (queryDocumentSnapshots != null) {
+                    if (queryDocumentSnapshots.getDocuments() == null) {
+                        Log.e("recyclerView", "없다!");
+                    } else {
+                        textView.setVisibility(View.INVISIBLE);
+                        List<DocumentChange> query = queryDocumentSnapshots.getDocumentChanges();
+                        for (int i = 0; i < query.size(); i++) {
+                            Schedule schedule = (query.get(i).getDocument()).toObject(Schedule.class);
+                            switch (query.get(i).getType()) {
+                                case ADDED:
+                                    schedules.add(schedule);
+                                    scheduleModelsKey.add(query.get(i).getDocument().getId());
+                                    Log.e("key", query.get(i).getDocument().getId());
+                                    break;
+                                case REMOVED:
+                                    Log.e("aaaaa", "aaaaaaaaa");
+                                    deleteItem(query.get(i).getDocument().getId());
+                                    adapter.notifyItemRemoved(i);
+                                    break;
+                            }
                         }
+                        adapter.notifyDataSetChanged();
                     }
-                    adapter.notifyDataSetChanged();
                 }
             }
         });
     }
 
-    private void deleteItem(String deleteKey){
-        for(int i=0;i<scheduleModelsKey.size();i++){
-            if(deleteKey.equals(scheduleModelsKey.get(i))){
+    private void deleteItem(String deleteKey) {
+        for (int i = 0; i < scheduleModelsKey.size(); i++) {
+            if (deleteKey.equals(scheduleModelsKey.get(i))) {
                 scheduleModelsKey.remove(i);
             }
         }
@@ -186,11 +188,11 @@ public class ScheduleFragment extends Fragment {
                 for (int i = 0; i < eventDay.size(); i++) {
                     if (eventDay.get(i).equals(datee)) {
 
-                        Bundle bundle= new Bundle();
-                        bundle.putString("date",datee);
+                        Bundle bundle = new Bundle();
+                        bundle.putString("date", datee);
 
                         ScheduleDialog scheduleDialog = ScheduleDialog.newInstance(datee);
-                        scheduleDialog.show(getFragmentManager(),"scheduleDialog");
+                        scheduleDialog.show(getFragmentManager(), "scheduleDialog");
 
                     }
                 }
